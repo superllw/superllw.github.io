@@ -75,7 +75,119 @@
   </style>
 </noscript>
 
-</head>
+<style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
   <div class="container use-motion">
@@ -154,6 +266,189 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/05/28/%E4%BA%8C%E5%88%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="llw">
+      <meta itemprop="description" content="des">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="llw's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/05/28/%E4%BA%8C%E5%88%86/" class="post-title-link" itemprop="url">二分</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2024-05-28 21:21:34 / 修改时间：21:59:55" itemprop="dateCreated datePublished" datetime="2024-05-28T21:21:34+08:00">2024-05-28</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h1><h2 id="自己实现二分："><a href="#自己实现二分：" class="headerlink" title="自己实现二分："></a>自己实现二分：</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 这样找到的l &gt;= target</span></span><br><span class="line">l = <span class="number">0</span></span><br><span class="line">r = <span class="built_in">len</span>(nums)</span><br><span class="line"><span class="keyword">while</span> l &lt;= r:</span><br><span class="line">  mid = (l + r) // <span class="number">2</span></span><br><span class="line">  <span class="keyword">if</span> mid == target:</span><br><span class="line">    <span class="comment"># 找到了</span></span><br><span class="line">    l = mid</span><br><span class="line">    <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">if</span> mid &lt; target:</span><br><span class="line">      <span class="comment"># 左边小了</span></span><br><span class="line">      l = r + <span class="number">1</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">      r = l - <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="二分查找库："><a href="#二分查找库：" class="headerlink" title="二分查找库："></a>二分查找库：</h2><p>​    这个才是重点，可以减小代码量，但是并不是说可以不会写二分查找，或者可以不懂二分查找的原理<br>（这里主要是针对python的库函数，对应的c++的可以参考ranges::lower_bound/ upper_bound)</p>
+<p>​    首先需要保证列表有序，导入的库为bisect</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> bisect</span><br></pre></td></tr></table></figure>
+<h3 id="bisect-与-bisect-right"><a href="#bisect-与-bisect-right" class="headerlink" title="bisect() 与 bisect_right()"></a>bisect() 与 bisect_right()</h3><p>​    两者的作用相同的，都是返回<strong>大于</strong>x的第一个下标</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">index = bisect(ls, x)   <span class="comment">#第1个参数是列表，第2个参数是要查找的数，返回值为索引</span></span><br><span class="line">index = bisect_right(ls, x)</span><br></pre></td></tr></table></figure>
+<h3 id="bisect-left"><a href="#bisect-left" class="headerlink" title="bisect_left()"></a>bisect_left()</h3><p>​    返回<strong>大于等于</strong>x的第一个下标</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">index = bisect_left(ls, x)</span><br></pre></td></tr></table></figure>
+<p>​    记这两个也很简单，就跟基本上大多数编程语言一样的，区间都是左闭右开-&gt;[ , )</p>
+<h3 id="case"><a href="#case" class="headerlink" title="case"></a>case</h3><p>​    如果没有元素x，那么left与right得到的返回值都是一样的，可以理解为“index</p>
+<p>位置插入x，可以使list的单调性不发生变化”</p>
+<blockquote>
+<p>1 , 2 , 4 , 5</p>
+<p>1, 2 , <strong>3</strong> , 4 , 5</p>
+<p>两者返回的index都是2</p>
+</blockquote>
+<p>​    如果有元素x，left会得到x的index，而right得到的是index+1（因为要大于x）</p>
+<p>​    如果有多个：</p>
+<p>​            left：返回最左边的一个</p>
+<p>​            right ： 最右边的下一个</p>
+<blockquote>
+<p>1，2，2，2，2，2，3</p>
+<p>找左边的2 ： index = bisect_left(ls, 2)</p>
+<p>找右边的2 ： index = bisect_right(ls, 2) - 1</p>
+</blockquote>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/05/28/%E5%88%B7%E9%A2%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="llw">
+      <meta itemprop="description" content="des">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="llw's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/05/28/%E5%88%B7%E9%A2%98/" class="post-title-link" itemprop="url">算法记录</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2024-05-28 20:27:01 / 修改时间：21:20:04" itemprop="dateCreated datePublished" datetime="2024-05-28T20:27:01+08:00">2024-05-28</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="力扣算法题记录"><a href="#力扣算法题记录" class="headerlink" title="力扣算法题记录"></a>力扣算法题记录</h1><p>本篇是用于记录开始的，之前的基础是c++的，现在系统的用python做，本篇用于记录各种python的操作与语法之类的，主要对应的操作是一些数据结构相关的</p>
+<h2 id="基础操作"><a href="#基础操作" class="headerlink" title="基础操作"></a>基础操作</h2><h2 id="前缀合"><a href="#前缀合" class="headerlink" title="前缀合"></a>前缀合</h2><h3 id="前面加0"><a href="#前面加0" class="headerlink" title="前面加0"></a>前面加0</h3><p>​    两种操作，主要是s[0] = 0 ，便于后面计算之间的合的时候，特别处理左端点</p>
+<p>​    公式就是：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+s[0] &= 0 \\
+s[1] &= a[0] \\
+s[2] &= s[1] + a[1] \\
+ &... \\ 
+s[n] &= s[n-1] + a[n-1]
+\end{align*}</script><p>​    计算之间的合为：</p>
+<script type="math/tex; mode=display">
+a[left] + ... +  a[right]  =  s[right+1] - s[left]</script><p>对应代码两种写法，如果是累加的情况推荐第一种</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">s = <span class="built_in">list</span>(accumulate(nums, initial=<span class="number">0</span>))</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">s = [<span class="number">0</span>] * (<span class="built_in">len</span>(nums) + <span class="number">1</span>)</span><br><span class="line"><span class="keyword">for</span> i, x <span class="keyword">in</span> <span class="built_in">enumerate</span>(nums):</span><br><span class="line">	s[i + <span class="number">1</span>] = s[i] + x</span><br></pre></td></tr></table></figure>
+<h3 id="原地前缀合"><a href="#原地前缀合" class="headerlink" title="原地前缀合"></a>原地前缀合</h3><p>​    有的时候不会去考虑最前面的情况，我只是为了求某个区间的合，就直接把输入的数组啥的，直接原地做前缀合</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+s[0] &= a[0] \\
+s[1] &= s[0] + a[1] \\
+&...\\
+s[n] &= s[n-1] + a[n]
+\end{align*}</script><p>​    一般这种情况都不是用于求区间的合，主要是为了前缀合单调递增的性质，直接可以二分，找到前缀小于某个数的位置</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2024/05/27/%E4%B8%80%E4%BA%9Bhexo%E6%93%8D%E4%BD%9C/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -216,7 +511,8 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo server &amp;&amp; hexo s</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>部署（推到github)</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo deploy &amp;&amp; hexo d</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo deploy &amp;&amp; hexo d</span><br></pre></td></tr></table></figure>
+</li>
 </ol>
 
       
@@ -357,14 +653,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">2</span>
+          <span class="site-state-item-count">4</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
-        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-count">2</span>
         <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
 </div>
@@ -447,6 +749,61 @@
 
 
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 
