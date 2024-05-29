@@ -266,6 +266,194 @@ mjx-container[display="true"] + br {
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/05/29/%E4%BD%8D%E8%BF%90%E7%AE%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="llw">
+      <meta itemprop="description" content="des">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="llw's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/05/29/%E4%BD%8D%E8%BF%90%E7%AE%97/" class="post-title-link" itemprop="url">位运算</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2024-05-29 20:41:04 / 修改时间：20:53:58" itemprop="dateCreated datePublished" datetime="2024-05-29T20:41:04+08:00">2024-05-29</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <div class="table-container">
+<table>
+<thead>
+<tr>
+<th>符号</th>
+<th>描述</th>
+<th>运算规则</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&amp;</td>
+<td>与</td>
+<td>两个位都为1时，结果才为1</td>
+</tr>
+<tr>
+<td>\</td>
+<td></td>
+<td>或</td>
+<td>两个位都为0时，结果才为0</td>
+</tr>
+<tr>
+<td>^</td>
+<td>异或</td>
+<td>两个位相同为0，相异为1</td>
+</tr>
+<tr>
+<td>~</td>
+<td>取反</td>
+<td>0变1，1变0</td>
+</tr>
+<tr>
+<td>&lt;&lt;</td>
+<td>左移</td>
+<td>各二进位全部左移若干位，高位丢弃，低位补0</td>
+</tr>
+<tr>
+<td>&gt;&gt;</td>
+<td>右移</td>
+<td>各二进位全部右移若干位，对无符号数，高位补0，</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="位运算基础"><a href="#位运算基础" class="headerlink" title="位运算基础"></a>位运算基础</h2><p>遍历每一位：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> n :</span><br><span class="line">	<span class="keyword">if</span>(n &amp; <span class="number">1</span>):</span><br><span class="line">		<span class="comment"># 当前位有1</span></span><br><span class="line">	n &gt;&gt;= <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>比如一个数转二进制</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">a = []</span><br><span class="line"><span class="keyword">while</span> n:</span><br><span class="line">  a.insert(<span class="number">0</span>, n &amp; <span class="number">1</span>)</span><br><span class="line">  n &gt;&gt;= <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># n = 123</span></span><br><span class="line"><span class="comment"># a = [1, 1, 1, 1, 0, 1, 1]</span></span><br></pre></td></tr></table></figure>
+<p>只取其中的1的位置</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">a = []</span><br><span class="line"><span class="keyword">while</span> n:</span><br><span class="line">  lb = n &amp; -n	<span class="comment"># 计算 n 的最低位 1 的权重</span></span><br><span class="line">  a.append(lb)	<span class="comment"># 将权重添加到列表 a 中</span></span><br><span class="line">  n ^= lb	<span class="comment"># 将最低位 1 清零</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/05/29/python%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="llw">
+      <meta itemprop="description" content="des">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="llw's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/05/29/python%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0/" class="post-title-link" itemprop="url">python内置函数</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2024-05-29 20:08:48 / 修改时间：20:39:45" itemprop="dateCreated datePublished" datetime="2024-05-29T20:08:48+08:00">2024-05-29</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>主要是为了记录一下刷题用到的一些python的内置函数</p>
+<h2 id="reduce"><a href="#reduce" class="headerlink" title="reduce()"></a>reduce()</h2><p>python3需要导入<em>functools</em></p>
+<p>累积函数，对一个数据集合中的所有数据进行操作，主要是配合lambda使用</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">reduce(function, iterable[, initializer])</span><br><span class="line"><span class="comment"># 累加：</span></span><br><span class="line">a = reduce(<span class="keyword">lambda</span> x, y: x + y , [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 累积：</span></span><br><span class="line">b = reduce(<span class="keyword">lambda</span> x, y: x * y , [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>])</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2024/05/28/%E4%BA%8C%E5%88%86/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -373,7 +561,7 @@ mjx-container[display="true"] + br {
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2024/05/28/%E5%88%B7%E9%A2%98/" class="post-title-link" itemprop="url">算法记录</a>
+            <a href="/2024/05/28/%E5%88%B7%E9%A2%98/" class="post-title-link" itemprop="url">数据结构</a>
         </h2>
 
         <div class="post-meta">
@@ -382,10 +570,16 @@ mjx-container[display="true"] + br {
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2024-05-28 20:27:01 / 修改时间：21:20:04" itemprop="dateCreated datePublished" datetime="2024-05-28T20:27:01+08:00">2024-05-28</time>
+              <time title="创建时间：2024-05-28 20:27:01" itemprop="dateCreated datePublished" datetime="2024-05-28T20:27:01+08:00">2024-05-28</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-05-29 20:53:55" itemprop="dateModified" datetime="2024-05-29T20:53:55+08:00">2024-05-29</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -407,8 +601,8 @@ mjx-container[display="true"] + br {
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="力扣算法题记录"><a href="#力扣算法题记录" class="headerlink" title="力扣算法题记录"></a>力扣算法题记录</h1><p>本篇是用于记录开始的，之前的基础是c++的，现在系统的用python做，本篇用于记录各种python的操作与语法之类的，主要对应的操作是一些数据结构相关的</p>
-<h2 id="基础操作"><a href="#基础操作" class="headerlink" title="基础操作"></a>基础操作</h2><h2 id="前缀合"><a href="#前缀合" class="headerlink" title="前缀合"></a>前缀合</h2><h3 id="前面加0"><a href="#前面加0" class="headerlink" title="前面加0"></a>前面加0</h3><p>​    两种操作，主要是s[0] = 0 ，便于后面计算之间的合的时候，特别处理左端点</p>
+          <h1 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h1><p>本篇是用于记录开始的，之前的基础是c++的，现在系统的用python做，本篇用于记录各种python的操作与语法之类的，主要对应的操作是一些数据结构相关的</p>
+<h2 id="前缀合"><a href="#前缀合" class="headerlink" title="前缀合"></a>前缀合</h2><h3 id="前面加0"><a href="#前面加0" class="headerlink" title="前面加0"></a>前面加0</h3><p>​    两种操作，主要是s[0] = 0 ，便于后面计算之间的合的时候，特别处理左端点</p>
 <p>​    公式就是：</p>
 <script type="math/tex; mode=display">
 \begin{align*}
@@ -653,7 +847,7 @@ s[n] &= s[n-1] + a[n]
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-count">6</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -665,7 +859,7 @@ s[n] &= s[n-1] + a[n]
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-count">3</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
