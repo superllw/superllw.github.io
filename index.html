@@ -266,6 +266,98 @@ mjx-container[display="true"] + br {
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/06/01/Vim%E5%AD%A6%E4%B9%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="llw">
+      <meta itemprop="description" content="des">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="llw's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/06/01/Vim%E5%AD%A6%E4%B9%A0/" class="post-title-link" itemprop="url">Vim学习笔记</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2024-06-01 20:27:04 / 修改时间：22:06:31" itemprop="dateCreated datePublished" datetime="2024-06-01T20:27:04+08:00">2024-06-01</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/" itemprop="url" rel="index"><span itemprop="name">工具使用</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>学习的资料是：《Vim实用技巧》，</p>
+<p>先使用自带的vimtutor进行上手</p>
+<h2 id="基础操作"><a href="#基础操作" class="headerlink" title="基础操作"></a>基础操作</h2><p><strong>h </strong> 左， （在最左边）</p>
+<p><strong>l</strong>  右， （在最右边）</p>
+<p><strong>j</strong> 下，（看起来像一个向下的箭头）</p>
+<p><strong>k</strong> 上</p>
+<p><strong>:q!</strong> 直接退出，不保存</p>
+<p><strong>:wq</strong> 保存并退出    </p>
+<p><strong>x</strong> 删除当前字符</p>
+<p><strong>i</strong> 插入文本</p>
+<p><strong>A</strong> 添加内容</p>
+<h2 id="删除类指令"><a href="#删除类指令" class="headerlink" title="删除类指令"></a>删除类指令</h2><p>许多的命令都是由一个操作符和一个动作构成，删除的命令格式如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">d motion</span><br></pre></td></tr></table></figure>
+<p><strong>x</strong> 删除光标处的单词</p>
+<p><strong>dw</strong> 删除单词（delete word）</p>
+<p><strong>de</strong> 删除当前位置到单词末尾，包括最后一个字符</p>
+<p>dw只删除单词，de删除到下一个单词，假如两个单词之间有多个空格啥的，de全删，dw不删</p>
+<p><strong>d$</strong> 从光标处删除到当前行尾部</p>
+<blockquote>
+<p>在动作前面输入数字会使他重复那么多次<br>可以通过输入计数器的方式，删除多个</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">d   number(数字)   motion</span><br></pre></td></tr></table></figure>
+<p><strong>dd</strong> 删除整行，同理可以使用计数器删除多行：<strong>2dd</strong></p>
+<p><strong>u</strong> 可以撤销最后的指令 （ctrl+r）</p>
+<p><strong>U</strong> 可以撤销整行的指令</p>
+<h2 id="置入类指令"><a href="#置入类指令" class="headerlink" title="置入类指令"></a>置入类指令</h2>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2024/05/31/pytorch-lighting%E4%BD%BF%E7%94%A8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1119,19 +1211,19 @@ s[i] = s[j] - k
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-count">10</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
-        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-count">4</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
