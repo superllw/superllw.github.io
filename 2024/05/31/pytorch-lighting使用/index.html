@@ -28,7 +28,7 @@
 <meta property="og:description" content="都是根据官方文档学习的（https:&#x2F;&#x2F;lightning.ai&#x2F;docs&#x2F;pytorch） CoreAPILightningModule一个module主要是六部分组成  Initialization (__init__ and setup()). Train Loop (training_step()) Validation Loop (validation_step()) Test Loop">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-05-31T01:48:33.150Z">
-<meta property="article:modified_time" content="2024-05-31T08:10:05.863Z">
+<meta property="article:modified_time" content="2024-06-01T14:10:10.196Z">
 <meta property="article:author" content="llw">
 <meta property="article:tag" content="python">
 <meta property="article:tag" content="深度学习">
@@ -293,10 +293,16 @@ mjx-container[display="true"] + br {
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2024-05-31 09:48:33 / 修改时间：16:10:05" itemprop="dateCreated datePublished" datetime="2024-05-31T09:48:33+08:00">2024-05-31</time>
+              <time title="创建时间：2024-05-31 09:48:33" itemprop="dateCreated datePublished" datetime="2024-05-31T09:48:33+08:00">2024-05-31</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-06-01 22:10:10" itemprop="dateModified" datetime="2024-06-01T22:10:10+08:00">2024-06-01</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -322,11 +328,11 @@ mjx-container[display="true"] + br {
 <h2 id="CoreAPI"><a href="#CoreAPI" class="headerlink" title="CoreAPI"></a>CoreAPI</h2><h3 id="LightningModule"><a href="#LightningModule" class="headerlink" title="LightningModule"></a>LightningModule</h3><p>一个module主要是六部分组成</p>
 <ul>
 <li>Initialization (<code>__init__</code> and <code>setup()</code>).</li>
-<li>Train Loop (<a target="_blank" rel="noopener" href="https://lightning.ai/docs/pytorch/stable/api/lightning.pytorch.core.LightningModule.html#lightning.pytorch.core.LightningModule.training_step"><code>training_step()</code></a>)</li>
-<li>Validation Loop (<a target="_blank" rel="noopener" href="https://lightning.ai/docs/pytorch/stable/api/lightning.pytorch.core.LightningModule.html#lightning.pytorch.core.LightningModule.validation_step"><code>validation_step()</code></a>)</li>
-<li>Test Loop (<a target="_blank" rel="noopener" href="https://lightning.ai/docs/pytorch/stable/api/lightning.pytorch.core.LightningModule.html#lightning.pytorch.core.LightningModule.test_step"><code>test_step()</code></a>)</li>
-<li>Prediction Loop (<a target="_blank" rel="noopener" href="https://lightning.ai/docs/pytorch/stable/api/lightning.pytorch.core.LightningModule.html#lightning.pytorch.core.LightningModule.predict_step"><code>predict_step()</code></a>)</li>
-<li>Optimizers and LR Schedulers (<a target="_blank" rel="noopener" href="https://lightning.ai/docs/pytorch/stable/api/lightning.pytorch.core.LightningModule.html#lightning.pytorch.core.LightningModule.configure_optimizers"><code>configure_optimizers()</code></a>)</li>
+<li>Train Loop (<code>training_step()</code>)</li>
+<li>Validation Loop (<code>validation_step()</code>)</li>
+<li>Test Loop (<code>test_step()</code>)</li>
+<li>Prediction Loop (<code>predict_step()</code>)</li>
+<li>Optimizers and LR Schedulers (<code>configure_optimizers()</code>)</li>
 </ul>
 <p>然后训练的过程就变的很简单：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">net = MyLightningModuleNet()</span><br><span class="line">trainer = Trainer()</span><br><span class="line">trainer.fit(net)</span><br></pre></td></tr></table></figure>
@@ -393,8 +399,8 @@ mjx-container[display="true"] + br {
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2024/05/31/%E4%BD%BF%E7%94%A8/" rel="prev" title="">
-      <i class="fa fa-chevron-left"></i> 
+    <a href="/2024/05/30/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%EF%BC%88python%EF%BC%89/" rel="prev" title="数据结构">
+      <i class="fa fa-chevron-left"></i> 数据结构
     </a></div>
       <div class="post-nav-item">
     <a href="/2024/06/01/Vim%E5%AD%A6%E4%B9%A0/" rel="next" title="Vim学习笔记">
@@ -472,7 +478,7 @@ mjx-container[display="true"] + br {
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-count">9</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
