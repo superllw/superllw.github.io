@@ -28,7 +28,7 @@
 <meta property="og:description" content="数据结构类算法本篇是用于记录开始的，之前的基础是c++的，现在系统的用python做，本篇用于记录各种python的操作与语法之类的，主要对应的操作是一些数据结构相关的 1.前缀合1.1基础前面加0​    两种操作，主要是s[0] &#x3D; 0 ，便于后面计算之间的合的时候，特别处理左端点 ​    公式就是：  \begin{align*} s[0] &amp;&#x3D; 0 \\ s[1] &amp;&#x3D; a[0] \\">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-05-28T12:27:01.816Z">
-<meta property="article:modified_time" content="2024-05-30T13:48:01.801Z">
+<meta property="article:modified_time" content="2024-06-05T02:01:45.991Z">
 <meta property="article:author" content="llw">
 <meta property="article:tag" content="leetcode">
 <meta property="article:tag" content="python">
@@ -301,7 +301,7 @@ mjx-container[display="true"] + br {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-05-30 21:48:01" itemprop="dateModified" datetime="2024-05-30T21:48:01+08:00">2024-05-30</time>
+                <time title="修改时间：2024-06-05 10:01:45" itemprop="dateModified" datetime="2024-06-05T10:01:45+08:00">2024-06-05</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -359,7 +359,55 @@ s[n] &= s[n-1] + a[n]
 s[i] = s[j] - k
 \nonumber</script><p>所以用map存一下前面的sum是否存在，然后去<strong>找</strong>就行</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">ans = <span class="built_in">sum</span> = <span class="number">0</span></span><br><span class="line">mp = defaultdict(<span class="built_in">int</span>, {<span class="number">0</span>:<span class="number">1</span>}) <span class="comment"># 为了当s[j] = k 时也能算进去</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, n):</span><br><span class="line">  <span class="built_in">sum</span> += nums[i]</span><br><span class="line">  ans += mp[<span class="built_in">sum</span> - k]</span><br><span class="line">  mp[<span class="built_in">sum</span>] += <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> ans</span><br></pre></td></tr></table></figure>
-
+<h2 id="8-树状数组与线段树"><a href="#8-树状数组与线段树" class="headerlink" title="8.树状数组与线段树"></a>8.树状数组与线段树</h2><h3 id="8-1树状数组"><a href="#8-1树状数组" class="headerlink" title="8.1树状数组"></a>8.1树状数组</h3><p>普通的数组：修改元素O(1)，求和O(n)</p>
+<p>前缀合数组：修改元素O(n)，求和O(1)</p>
+<p>为了平衡这两者，可以把前缀合拆分成若干个关键区间，更新操作就更新若干个关键区间</p>
+<h4 id="8-1-1拆分区间"><a href="#8-1-1拆分区间" class="headerlink" title="8.1.1拆分区间"></a>8.1.1拆分区间</h4><p>按照2的幂进行拆分，假如区间为[1, 8]</p>
+<p>可以拆分为：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+&[1,1] = [1,1]\\
+&[1,2] = [1,2]\\
+&[1,3] = [1,2] + [3,3]\\
+&[1,4] = [1,4]\\
+&[1,5] = [1,4] + [5,5]\\
+&[1,6] = [1,4] + [5,6]\\
+&[1,7] = [1,4] + [5,6] + [7,7]\\
+&[1,8] = [1,8]
+\end{aligned}
+\nonumber</script><p>拆分的规则：(核心就是拆出来的区间长度只能是2的幂)</p>
+<ul>
+<li><p>如果<code>i</code>是2的幂，不用拆分</p>
+</li>
+<li><p>不是2的幂的话，拆分为2的幂 + 不是2的幂：</p>
+<script type="math/tex; mode=display">
+[1,n] = [1,n - lowbit(n)] + [n - lowbit(n) + 1 , n]
+\nonumber</script><p>而后面的<mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.566ex;" xmlns="http://www.w3.org/2000/svg" width="16.595ex" height="2.262ex" role="img" focusable="false" viewBox="0 -750 7335.1 1000"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="5B" d="M118 -250V750H255V710H158V-210H255V-250H118Z"></path></g><g data-mml-node="mn" transform="translate(278,0)"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path></g><g data-mml-node="mo" transform="translate(778,0)"><path data-c="2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path></g><g data-mml-node="mi" transform="translate(1222.7,0)"><path data-c="1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mo" transform="translate(2044.9,0)"><path data-c="2212" d="M84 237T84 250T98 270H679Q694 262 694 250T679 230H98Q84 237 84 250Z"></path></g><g data-mml-node="mi" transform="translate(3045.1,0)"><path data-c="1D459" d="M117 59Q117 26 142 26Q179 26 205 131Q211 151 215 152Q217 153 225 153H229Q238 153 241 153T246 151T248 144Q247 138 245 128T234 90T214 43T183 6T137 -11Q101 -11 70 11T38 85Q38 97 39 102L104 360Q167 615 167 623Q167 626 166 628T162 632T157 634T149 635T141 636T132 637T122 637Q112 637 109 637T101 638T95 641T94 647Q94 649 96 661Q101 680 107 682T179 688Q194 689 213 690T243 693T254 694Q266 694 266 686Q266 675 193 386T118 83Q118 81 118 75T117 65V59Z"></path></g><g data-mml-node="mi" transform="translate(3343.1,0)"><path data-c="1D45C" d="M201 -11Q126 -11 80 38T34 156Q34 221 64 279T146 380Q222 441 301 441Q333 441 341 440Q354 437 367 433T402 417T438 387T464 338T476 268Q476 161 390 75T201 -11ZM121 120Q121 70 147 48T206 26Q250 26 289 58T351 142Q360 163 374 216T388 308Q388 352 370 375Q346 405 306 405Q243 405 195 347Q158 303 140 230T121 120Z"></path></g><g data-mml-node="mi" transform="translate(3828.1,0)"><path data-c="1D464" d="M580 385Q580 406 599 424T641 443Q659 443 674 425T690 368Q690 339 671 253Q656 197 644 161T609 80T554 12T482 -11Q438 -11 404 5T355 48Q354 47 352 44Q311 -11 252 -11Q226 -11 202 -5T155 14T118 53T104 116Q104 170 138 262T173 379Q173 380 173 381Q173 390 173 393T169 400T158 404H154Q131 404 112 385T82 344T65 302T57 280Q55 278 41 278H27Q21 284 21 287Q21 293 29 315T52 366T96 418T161 441Q204 441 227 416T250 358Q250 340 217 250T184 111Q184 65 205 46T258 26Q301 26 334 87L339 96V119Q339 122 339 128T340 136T341 143T342 152T345 165T348 182T354 206T362 238T373 281Q402 395 406 404Q419 431 449 431Q468 431 475 421T483 402Q483 389 454 274T422 142Q420 131 420 107V100Q420 85 423 71T442 42T487 26Q558 26 600 148Q609 171 620 213T632 273Q632 306 619 325T593 357T580 385Z"></path></g><g data-mml-node="mi" transform="translate(4544.1,0)"><path data-c="1D44F" d="M73 647Q73 657 77 670T89 683Q90 683 161 688T234 694Q246 694 246 685T212 542Q204 508 195 472T180 418L176 399Q176 396 182 402Q231 442 283 442Q345 442 383 396T422 280Q422 169 343 79T173 -11Q123 -11 82 27T40 150V159Q40 180 48 217T97 414Q147 611 147 623T109 637Q104 637 101 637H96Q86 637 83 637T76 640T73 647ZM336 325V331Q336 405 275 405Q258 405 240 397T207 376T181 352T163 330L157 322L136 236Q114 150 114 114Q114 66 138 42Q154 26 178 26Q211 26 245 58Q270 81 285 114T318 219Q336 291 336 325Z"></path></g><g data-mml-node="mi" transform="translate(4973.1,0)"><path data-c="1D456" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mi" transform="translate(5318.1,0)"><path data-c="1D461" d="M26 385Q19 392 19 395Q19 399 22 411T27 425Q29 430 36 430T87 431H140L159 511Q162 522 166 540T173 566T179 586T187 603T197 615T211 624T229 626Q247 625 254 615T261 596Q261 589 252 549T232 470L222 433Q222 431 272 431H323Q330 424 330 420Q330 398 317 385H210L174 240Q135 80 135 68Q135 26 162 26Q197 26 230 60T283 144Q285 150 288 151T303 153H307Q322 153 322 145Q322 142 319 133Q314 117 301 95T267 48T216 6T155 -11Q125 -11 98 4T59 56Q57 64 57 83V101L92 241Q127 382 128 383Q128 385 77 385H26Z"></path></g><g data-mml-node="mo" transform="translate(5679.1,0)"><path data-c="28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path></g><g data-mml-node="mi" transform="translate(6068.1,0)"><path data-c="1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mo" transform="translate(6668.1,0)"><path data-c="29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path></g><g data-mml-node="mo" transform="translate(7057.1,0)"><path data-c="5D" d="M22 710V750H159V-250H22V-210H119V710H22Z"></path></g></g></g></svg></mjx-container>可以接着按照规则拆分</p>
+</li>
+</ul>
+<blockquote>
+<p>注意：可以观察到每个区间的右端点，都是唯一的，8个数对应8个右端点</p>
+<p>因为这个特点，我们可以用一个数组tree，tree[i]表示[1, i]这个区间的合</p>
+</blockquote>
+<h4 id="8-1-2如何更新某个节点"><a href="#8-1-2如何更新某个节点" class="headerlink" title="8.1.2如何更新某个节点"></a>8.1.2如何更新某个节点</h4><p>改变某个index对应的值，就只需要去找包含该index的关键区间就行，怎么去找这个关键区间？</p>
+<blockquote>
+<p>1.右端点为x的区间，<strong>包含且仅包含</strong>于右端点为x + lowbit(x)的区间</p>
+</blockquote>
+<p>更新的算法如下：</p>
+<p>假设index的节点变为val：</p>
+<ul>
+<li>right = index + 1(right对应的是tree中的索引，是从1开始的，index是nums中对应的索引，从0开始)</li>
+<li>需要更改的区间为tree[right]，所以tree[right] += (val-index)</li>
+<li>right = right + lowbit(right)，循环更新right之后更新tree[right]，直到i &gt; len(nums)</li>
+</ul>
+<h4 id="8-1-3如何计算区间的合"><a href="#8-1-3如何计算区间的合" class="headerlink" title="8.1.3如何计算区间的合"></a>8.1.3如何计算区间的合</h4><p>假如我要计算[left, right]的区间合</p>
+<ul>
+<li>先找到[1, right + 1] , [1, left]</li>
+<li>[1, left] = tree[left], [1,right + 1] = tree[right + 1]</li>
+</ul>
+<script type="math/tex; mode=display">
+nums[left] + ... + nums[right] = tree[right + 1] - tree[left]
+\nonumber</script>
     </div>
 
     
@@ -444,7 +492,7 @@ s[i] = s[j] - k
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%B1%BB%E7%AE%97%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">数据结构类算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%89%8D%E7%BC%80%E5%90%88"><span class="nav-number">1.1.</span> <span class="nav-text">1.前缀合</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1%E5%9F%BA%E7%A1%80"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1基础</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%89%8D%E9%9D%A2%E5%8A%A00"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">前面加0</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8E%9F%E5%9C%B0%E5%89%8D%E7%BC%80%E5%90%88"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">原地前缀合</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2%E5%89%8D%E7%BC%80%E5%90%88%E4%B8%8Ehash%E8%A1%A8"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.2前缀合与hash表</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%B1%BB%E7%AE%97%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">数据结构类算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%89%8D%E7%BC%80%E5%90%88"><span class="nav-number">1.1.</span> <span class="nav-text">1.前缀合</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1%E5%9F%BA%E7%A1%80"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1基础</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%89%8D%E9%9D%A2%E5%8A%A00"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">前面加0</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8E%9F%E5%9C%B0%E5%89%8D%E7%BC%80%E5%90%88"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">原地前缀合</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2%E5%89%8D%E7%BC%80%E5%90%88%E4%B8%8Ehash%E8%A1%A8"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.2前缀合与hash表</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84%E4%B8%8E%E7%BA%BF%E6%AE%B5%E6%A0%91"><span class="nav-number">1.2.</span> <span class="nav-text">8.树状数组与线段树</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#8-1%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84"><span class="nav-number">1.2.1.</span> <span class="nav-text">8.1树状数组</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#8-1-1%E6%8B%86%E5%88%86%E5%8C%BA%E9%97%B4"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">8.1.1拆分区间</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-1-2%E5%A6%82%E4%BD%95%E6%9B%B4%E6%96%B0%E6%9F%90%E4%B8%AA%E8%8A%82%E7%82%B9"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">8.1.2如何更新某个节点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-1-3%E5%A6%82%E4%BD%95%E8%AE%A1%E7%AE%97%E5%8C%BA%E9%97%B4%E7%9A%84%E5%90%88"><span class="nav-number">1.2.1.3.</span> <span class="nav-text">8.1.3如何计算区间的合</span></a></li></ol></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
