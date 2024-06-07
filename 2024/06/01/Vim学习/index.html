@@ -28,7 +28,7 @@
 <meta property="og:description" content="学习的资料是：《Vim实用技巧》， 先使用自带的vimtutor进行上手">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-06-01T12:27:04.624Z">
-<meta property="article:modified_time" content="2024-06-06T02:02:53.262Z">
+<meta property="article:modified_time" content="2024-06-07T14:23:21.672Z">
 <meta property="article:author" content="llw">
 <meta property="article:tag" content="Vim">
 <meta name="twitter:card" content="summary">
@@ -305,7 +305,7 @@ mjx-container[display="true"] + br {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-06-06 10:02:53" itemprop="dateModified" datetime="2024-06-06T10:02:53+08:00">2024-06-06</time>
+                <time title="修改时间：2024-06-07 22:23:21" itemprop="dateModified" datetime="2024-06-07T22:23:21+08:00">2024-06-07</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -331,7 +331,8 @@ mjx-container[display="true"] + br {
         <p>学习的资料是：《Vim实用技巧》，</p>
 <p>先使用自带的vimtutor进行上手</p>
 <span id="more"></span>
-<h2 id="基础操作"><a href="#基础操作" class="headerlink" title="基础操作"></a>基础操作</h2><p><strong>h </strong> 左， （在最左边）</p>
+<h2 id="基础操作"><a href="#基础操作" class="headerlink" title="基础操作"></a>基础操作</h2><p>这些基础操作可以简单的上手vim，如果需要更近一步，需要看之后的部分</p>
+<p><strong>h </strong> 左， （在最左边）</p>
 <p><strong>l</strong>  右， （在最右边）</p>
 <p><strong>j</strong> 下，（看起来像一个向下的箭头）</p>
 <p><strong>k</strong> 上</p>
@@ -340,12 +341,27 @@ mjx-container[display="true"] + br {
 <p><strong>x</strong> 删除当前字符</p>
 <p><strong>i</strong> 插入文本</p>
 <p><strong>A</strong> 添加内容</p>
+<h2 id="大范围移动操作"><a href="#大范围移动操作" class="headerlink" title="大范围移动操作"></a>大范围移动操作</h2><p><code>[number]</code> 向下移动多少行（最常用）</p>
+<p><code>[number] + [space]</code> 输入一个数字，再按空格，光标向右移动number个字符</p>
+<p><code>e</code> 移动到<strong>下一个</strong>单词的<strong>末尾</strong>（end）</p>
+<p><code>w</code> 移动到<strong>下一个</strong>单词的<strong>开头</strong></p>
+<p><code>b</code> 移动到<strong>上一个</strong>单词的<strong>开头</strong></p>
+<p><code>ge</code> 移动到<strong>上一个</strong>单词的<strong>末尾</strong></p>
+<p><code>ctrl + f</code> 下一页，相当于page down</p>
+<p><code>ctrl + b</code> 上一页，相当于page up</p>
+<p><code>ctrl + d</code> 向下移动半页</p>
+<p><code>ctrl + u</code> 向上移动半页</p>
+<p><code>H</code> 移动到屏幕最<strong>上面</strong>行的第一个字符</p>
+<p><code>M</code> 移动到屏幕最<strong>中央</strong>行的第一个字符</p>
+<p><code>L</code> 移动到屏幕最<strong>下面</strong>行的第一个字符</p>
+<p><code>G</code> 移动到<strong>文档</strong>的最后一行</p>
+<p><code>[number] + G</code> 移动到<strong>文档</strong>的第number行(常用)</p>
+<p><code>0</code> 跳转到当前行的最前面</p>
 <h2 id="删除类指令"><a href="#删除类指令" class="headerlink" title="删除类指令"></a>删除类指令</h2><p>许多的命令都是由一个操作符和一个动作构成，删除的命令格式如下：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">d motion</span><br></pre></td></tr></table></figure>
 <p><strong>x</strong> 删除光标处的单词</p>
 <p><strong>dw</strong> 删除单词（delete word）</p>
-<p><strong>de</strong> 删除当前位置到单词末尾，包括最后一个字符</p>
-<p>dw只删除单词，de删除到下一个单词，假如两个单词之间有多个空格啥的，de全删，dw不删</p>
+<p><strong>de</strong> 删除当前位置到单词末尾，包括最后一个字符，dw只删除单词，de删除到下一个单词，假如两个单词之间有多个空格啥的，de全删，dw不删</p>
 <p><strong>d$</strong> 从光标处删除到当前行尾部</p>
 <blockquote>
 <p>在动作前面输入数字会使他重复那么多次<br>可以通过输入计数器的方式，删除多个</p>
@@ -354,7 +370,40 @@ mjx-container[display="true"] + br {
 <p><strong>dd</strong> 删除整行，同理可以使用计数器删除多行：<strong>2dd</strong></p>
 <p><strong>u</strong> 可以撤销最后的指令 （ctrl+r）</p>
 <p><strong>U</strong> 可以撤销整行的指令</p>
-<h2 id="置入类指令"><a href="#置入类指令" class="headerlink" title="置入类指令"></a>置入类指令</h2>
+<h2 id="置入类指令"><a href="#置入类指令" class="headerlink" title="置入类指令"></a>置入类指令</h2><p>与删除类指令相同，置换类也可以用命令加操作符完成：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">c   [number]    motion</span><br></pre></td></tr></table></figure>
+<p>动作参数(motion)也是一样的，比如 <code>w</code> 代表单词，<code>$</code>代表行末等等</p>
+<p><code>y</code> 复制所选内容</p>
+<p><code>yy</code> 复制当前行</p>
+<p><code>p</code> 粘贴（Paste），使用<code>dd</code>删除之后，内容会保存到vim的<strong>寄存器</strong>里面（感觉相当于windows的剪切板），然后可以使用<code>p</code>指令将寄存器中的内容粘贴</p>
+<p><code>r</code> 替换（repalce），输入<code>r</code>和一个字符，可以替换光标所在位置的字符</p>
+<p><code>ce</code>改变文本直到一个单词的末尾（change end）， 相当于改变</p>
+<p><code>v</code>选择，相当于</p>
+<h2 id="位置类指令"><a href="#位置类指令" class="headerlink" title="位置类指令"></a>位置类指令</h2><p><code>Ctrl + g</code>可以查看当前行的信息，可以看目前在全文的多少行</p>
+<p><code>[number]  + G</code> 跳转到多少行</p>
+<p><code>G</code>文件最后一行</p>
+<p><code>gg</code>文件第一行</p>
+<p><code>/ + [字符串]</code> 可以查找当前文件中查找该字符串(<strong>往后</strong>)</p>
+<p><code>？ + [字符串]</code> 可以向前查找文件中的该字符串(<strong>往前</strong>)</p>
+<p><code>n</code> （next）<strong>与指令相同方向</strong>下一个</p>
+<p><code>N</code> （Next）<strong>与指令相反方向</strong>下一个</p>
+<p><code>Ctrl + o</code> 回退</p>
+<p><code>%</code> 把光标放到括号的位置，按<code>%</code>后跳到匹配的括号的位置，再按一次回到配对的第一个括号的地方</p>
+<p><code>:s/old/new/g</code> 可以替换 old 为 new(常用)</p>
+<ul>
+<li><code>:#,#s/old/new/g</code> 其中 #,# 代表的是替换操作的若干行中首尾两行的行号。</li>
+<li><code>:%s/old/new/g</code>替换整个文件中的每个匹配串</li>
+<li><code>:%s/old/new/gc</code> 会找到整个文件中的每个匹配串，并且对每个匹配串提示是否进行替换。</li>
+<li>这三个都挺常用的</li>
+</ul>
+<h2 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h2><p><code>:![外部命令：如ls，cd这种]</code> 执行外部的shell命令</p>
+<p><code>:w [文件名]</code> 将当前文件保存到<code>文件名</code>这个文件中</p>
+<p><code>v + :w filename</code> 可以只保存用v选中的内容到filename文件中</p>
+<p><code>:r filename</code> 提取filename的文件插入到当前文件中</p>
+<p><code>o</code> 在当前的下面新建一行，进入编辑模式</p>
+<p><code>O</code>（大写的o) 在上面新建一行，进入编辑模式</p>
+<p><code>a</code> 光标之后插入文本</p>
+
     </div>
 
     
@@ -437,7 +486,7 @@ mjx-container[display="true"] + br {
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C"><span class="nav-number">1.</span> <span class="nav-text">基础操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E7%B1%BB%E6%8C%87%E4%BB%A4"><span class="nav-number">2.</span> <span class="nav-text">删除类指令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%AE%E5%85%A5%E7%B1%BB%E6%8C%87%E4%BB%A4"><span class="nav-number">3.</span> <span class="nav-text">置入类指令</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C"><span class="nav-number">1.</span> <span class="nav-text">基础操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%A7%E8%8C%83%E5%9B%B4%E7%A7%BB%E5%8A%A8%E6%93%8D%E4%BD%9C"><span class="nav-number">2.</span> <span class="nav-text">大范围移动操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E7%B1%BB%E6%8C%87%E4%BB%A4"><span class="nav-number">3.</span> <span class="nav-text">删除类指令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%AE%E5%85%A5%E7%B1%BB%E6%8C%87%E4%BB%A4"><span class="nav-number">4.</span> <span class="nav-text">置入类指令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%8D%E7%BD%AE%E7%B1%BB%E6%8C%87%E4%BB%A4"><span class="nav-number">5.</span> <span class="nav-text">位置类指令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4"><span class="nav-number">6.</span> <span class="nav-text">命令</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
