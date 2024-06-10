@@ -36,7 +36,7 @@
 <meta property="og:image" content="http://example.com/2024/06/10/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8/image-20240610142433275.png">
 <meta property="og:image" content="http://example.com/2024/06/10/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8/image-20240610192349810.png">
 <meta property="article:published_time" content="2024-06-10T05:40:01.940Z">
-<meta property="article:modified_time" content="2024-06-10T11:59:31.618Z">
+<meta property="article:modified_time" content="2024-06-10T12:04:06.632Z">
 <meta property="article:author" content="llw">
 <meta property="article:tag" content="云服务器">
 <meta property="article:tag" content="linux">
@@ -309,7 +309,7 @@ mjx-container[display="true"] + br {
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2024-06-10 13:40:01 / 修改时间：19:59:31" itemprop="dateCreated datePublished" datetime="2024-06-10T13:40:01+08:00">2024-06-10</time>
+              <time title="创建时间：2024-06-10 13:40:01 / 修改时间：20:04:06" itemprop="dateCreated datePublished" datetime="2024-06-10T13:40:01+08:00">2024-06-10</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -334,11 +334,11 @@ mjx-container[display="true"] + br {
       
         <p>记录一下腾讯云服务器的相关配置过程</p>
 <span id="more"></span>
-<h2 id="1-登陆"><a href="#1-登陆" class="headerlink" title="1.登陆"></a>1.登陆</h2><h3 id="1-1标准方式登陆"><a href="#1-1标准方式登陆" class="headerlink" title="1.1标准方式登陆"></a>1.1标准方式登陆</h3><p><img src="/2024/06/10/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8/image-20240610135919232.png" alt="image-20240610135919232"></p>
+<h2 id="登陆"><a href="#登陆" class="headerlink" title="登陆"></a>登陆</h2><h3 id="标准方式登陆"><a href="#标准方式登陆" class="headerlink" title="标准方式登陆"></a>标准方式登陆</h3><p><img src="/2024/06/10/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8/image-20240610135919232.png" alt="image-20240610135919232"></p>
 <p>之后就可以进入到腾讯云网页版的界面中</p>
 <p>（这里省略了输入账号跟密码的过程，如果是初始的，就可以直接点击登陆，如果更改了密码，需要重新输入一下密码）</p>
 <p><img src="/2024/06/10/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8/image-20240610140004490.png" alt="image-20240610140004490"></p>
-<h3 id="1-2ssh连接"><a href="#1-2ssh连接" class="headerlink" title="1.2ssh连接"></a>1.2ssh连接</h3><p>使用的是macos，可以在终端中直接ssh连接：</p>
+<h3 id="ssh连接"><a href="#ssh连接" class="headerlink" title="ssh连接"></a>ssh连接</h3><p>使用的是macos，可以在终端中直接ssh连接：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh &lt;username&gt;@&lt;IP address or domain name&gt;</span><br></pre></td></tr></table></figure>
 <p><code>username</code> 是获取的用户名，一般为<code>root</code>或者<code>ubuntu</code></p>
 <p><code>IP address or domain name</code> 公网ip或者自定义域名，我使用的是公网ip（这个可以直接在控制台中点击详细信息查看）</p>
@@ -352,13 +352,13 @@ mjx-container[display="true"] + br {
 <p><img src="/2024/06/10/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8/image-20240610141750384.png" alt="image-20240610141750384"></p>
 <p>(如果是第一次连接，会问你是否需要连接，输入<code>yes</code>就行)：</p>
 <p><img src="/2024/06/10/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8/image-20240610141527297.png" alt="image-20240610141527297"></p>
-<h3 id="1-3使用远程软件登陆"><a href="#1-3使用远程软件登陆" class="headerlink" title="1.3使用远程软件登陆"></a>1.3使用远程软件登陆</h3><p>使用的是termius，别的也是同理，一般会遇到以下的参数：</p>
+<h3 id="使用远程软件登陆"><a href="#使用远程软件登陆" class="headerlink" title="使用远程软件登陆"></a>使用远程软件登陆</h3><p>使用的是termius，别的也是同理，一般会遇到以下的参数：</p>
 <p><code>Host name or Ip address</code>:  公网ip</p>
 <p><code>Port</code>: 服务器的端口，必须设置为22</p>
 <p><code>Connect Type</code>: 连接的方式，这里我选择的是SSH</p>
 <p><img src="/2024/06/10/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8/image-20240610142358828.png" alt="image-20240610142358828" style="zoom:50%;"></p>
 <p><img src="/2024/06/10/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8/image-20240610142433275.png" alt="image-20240610142433275"></p>
-<h3 id="1-4使用私钥连接"><a href="#1-4使用私钥连接" class="headerlink" title="1.4使用私钥连接"></a>1.4使用私钥连接</h3><p>这种比较方便</p>
+<h3 id="使用私钥连接"><a href="#使用私钥连接" class="headerlink" title="使用私钥连接"></a>使用私钥连接</h3><p>这种比较方便</p>
 <p>首先在自己的计算机生成ssh公钥与私钥：（有可能你想生成不同的公钥私钥对应不同的服务器，可以使用<code>-f 名称</code>，这样也便于你进行管理）</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">ssh-keygen -t rsa -C “your email” -f id_rsa_xx</span></span><br></pre></td></tr></table></figure>
 <p>然后需要把<strong>公钥</strong>添加到服务器中去：</p>
@@ -371,11 +371,11 @@ mjx-container[display="true"] + br {
 <p>然后可以使用设置好的名字进行连接：</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh &lt;Host后面的那个名字&gt;</span><br></pre></td></tr></table></figure>
 <p>但是有可能会遇到的问题：</p>
-<h4 id="1-远程主机的ssh配置"><a href="#1-远程主机的ssh配置" class="headerlink" title="1.远程主机的ssh配置"></a>1.远程主机的ssh配置</h4><p><code>/etc/ssh/sshd_config</code>文件中：</p>
+<h4 id="远程主机的ssh配置"><a href="#远程主机的ssh配置" class="headerlink" title="远程主机的ssh配置"></a>远程主机的ssh配置</h4><p><code>/etc/ssh/sshd_config</code>文件中：</p>
 <p><code>PubkeyAuthentication yes</code> #启用公钥认证</p>
 <p><code>AuthorizedKeysFile .ssh/authorized_keys</code> #公钥认证文件</p>
-<h3 id="2-客户端生成公钥私钥"><a href="#2-客户端生成公钥私钥" class="headerlink" title="2.客户端生成公钥私钥"></a>2.客户端生成公钥私钥</h3><p>这一步按照上面的就可以生成了，如果有问题确认一下就行</p>
-<h4 id="3-远程主机权限问题-大概率是这的问题"><a href="#3-远程主机权限问题-大概率是这的问题" class="headerlink" title="3.远程主机权限问题(大概率是这的问题)"></a>3.远程主机权限问题(大概率是这的问题)</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ls</span> -l</span><br></pre></td></tr></table></figure>
+<h4 id="客户端生成公钥私钥"><a href="#客户端生成公钥私钥" class="headerlink" title="客户端生成公钥私钥"></a>客户端生成公钥私钥</h4><p>这一步按照上面的就可以生成了，如果有问题确认一下就行</p>
+<h4 id="远程主机权限问题-大概率是这的问题"><a href="#远程主机权限问题-大概率是这的问题" class="headerlink" title="远程主机权限问题(大概率是这的问题)"></a>远程主机权限问题(大概率是这的问题)</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ls</span> -l</span><br></pre></td></tr></table></figure>
 <p>查看各个文件的权限，然后我这里的权限如下所示：</p>
 <p><img src="/2024/06/10/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8/image-20240610192349810.png" alt="image-20240610192349810"></p>
 <p>关于Linux的权限问题会在Linux相关内容里面进行介绍，这里只有所有者可以rwx，用户组和其他人没有权限，用户组不能有w权</p>
@@ -462,7 +462,7 @@ mjx-container[display="true"] + br {
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E7%99%BB%E9%99%86"><span class="nav-number">1.</span> <span class="nav-text">1.登陆</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1%E6%A0%87%E5%87%86%E6%96%B9%E5%BC%8F%E7%99%BB%E9%99%86"><span class="nav-number">1.1.</span> <span class="nav-text">1.1标准方式登陆</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2ssh%E8%BF%9E%E6%8E%A5"><span class="nav-number">1.2.</span> <span class="nav-text">1.2ssh连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3%E4%BD%BF%E7%94%A8%E8%BF%9C%E7%A8%8B%E8%BD%AF%E4%BB%B6%E7%99%BB%E9%99%86"><span class="nav-number">1.3.</span> <span class="nav-text">1.3使用远程软件登陆</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4%E4%BD%BF%E7%94%A8%E7%A7%81%E9%92%A5%E8%BF%9E%E6%8E%A5"><span class="nav-number">1.4.</span> <span class="nav-text">1.4使用私钥连接</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E8%BF%9C%E7%A8%8B%E4%B8%BB%E6%9C%BA%E7%9A%84ssh%E9%85%8D%E7%BD%AE"><span class="nav-number">1.4.1.</span> <span class="nav-text">1.远程主机的ssh配置</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%94%9F%E6%88%90%E5%85%AC%E9%92%A5%E7%A7%81%E9%92%A5"><span class="nav-number">1.5.</span> <span class="nav-text">2.客户端生成公钥私钥</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E8%BF%9C%E7%A8%8B%E4%B8%BB%E6%9C%BA%E6%9D%83%E9%99%90%E9%97%AE%E9%A2%98-%E5%A4%A7%E6%A6%82%E7%8E%87%E6%98%AF%E8%BF%99%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">1.5.1.</span> <span class="nav-text">3.远程主机权限问题(大概率是这的问题)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E4%B8%80%E4%BA%9B%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">2.</span> <span class="nav-text">2.一些初始化</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%99%BB%E9%99%86"><span class="nav-number">1.</span> <span class="nav-text">登陆</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%87%E5%87%86%E6%96%B9%E5%BC%8F%E7%99%BB%E9%99%86"><span class="nav-number">1.1.</span> <span class="nav-text">标准方式登陆</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ssh%E8%BF%9E%E6%8E%A5"><span class="nav-number">1.2.</span> <span class="nav-text">ssh连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E8%BF%9C%E7%A8%8B%E8%BD%AF%E4%BB%B6%E7%99%BB%E9%99%86"><span class="nav-number">1.3.</span> <span class="nav-text">使用远程软件登陆</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E7%A7%81%E9%92%A5%E8%BF%9E%E6%8E%A5"><span class="nav-number">1.4.</span> <span class="nav-text">使用私钥连接</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%9C%E7%A8%8B%E4%B8%BB%E6%9C%BA%E7%9A%84ssh%E9%85%8D%E7%BD%AE"><span class="nav-number">1.4.1.</span> <span class="nav-text">远程主机的ssh配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%94%9F%E6%88%90%E5%85%AC%E9%92%A5%E7%A7%81%E9%92%A5"><span class="nav-number">1.4.2.</span> <span class="nav-text">客户端生成公钥私钥</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%9C%E7%A8%8B%E4%B8%BB%E6%9C%BA%E6%9D%83%E9%99%90%E9%97%AE%E9%A2%98-%E5%A4%A7%E6%A6%82%E7%8E%87%E6%98%AF%E8%BF%99%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">1.4.3.</span> <span class="nav-text">远程主机权限问题(大概率是这的问题)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E4%B8%80%E4%BA%9B%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">2.</span> <span class="nav-text">2.一些初始化</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
