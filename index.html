@@ -303,7 +303,7 @@ mjx-container[display="true"] + br {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-06-27 10:57:53" itemprop="dateModified" datetime="2024-06-27T10:57:53+08:00">2024-06-27</time>
+                <time title="修改时间：2024-06-28 16:03:29" itemprop="dateModified" datetime="2024-06-28T16:03:29+08:00">2024-06-28</time>
               </span>
 
           
@@ -317,7 +317,8 @@ mjx-container[display="true"] + br {
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="1-FRCNet-Frequency-and-Region-Consistency-for-Semi-supervised-Medical-Image-Segmentation"><a href="#1-FRCNet-Frequency-and-Region-Consistency-for-Semi-supervised-Medical-Image-Segmentation" class="headerlink" title="1.FRCNet: Frequency and Region Consistency for Semi-supervised Medical Image Segmentation"></a>1.FRCNet: Frequency and Region Consistency for Semi-supervised Medical Image Segmentation</h2><p>半监督医学图像分割，主要是用到了一个<strong>频域一致性</strong>和<strong>区域一致性</strong>（FDC，MRSC）</p>
+          <h2 id="1-FRCNet-Frequency-and-Region-Consistency-for-Semi-supervised-Medical-Image-Segmentation"><a href="#1-FRCNet-Frequency-and-Region-Consistency-for-Semi-supervised-Medical-Image-Segmentation" class="headerlink" title="1.FRCNet: Frequency and Region Consistency for Semi-supervised Medical Image Segmentation"></a>1.FRCNet: Frequency and Region Consistency for Semi-supervised Medical Image Segmentation</h2><p><strong>MICCAI2024</strong></p>
+<p>半监督医学图像分割，主要是用到了一个<strong>频域一致性</strong>和<strong>区域一致性</strong>（FDC，MRSC）</p>
 <p><img src="/2024/06/25/%E8%AF%BB%E8%AE%BA%E6%96%87/image-20240627103130589.png" alt="image-20240627103130589"></p>
 <h3 id="1-FDC-Frequency-Domain-Consistency"><a href="#1-FDC-Frequency-Domain-Consistency" class="headerlink" title="1.FDC(Frequency Domain Consistency)"></a>1.FDC(Frequency Domain Consistency)</h3><p>提取之后的特征， 过DCT变换（离散余弦变换，类似于傅立叶变换），得到频域特征，然后分为N块，（文章的大小是2*2），然后进入DCT模块：</p>
 <p><img src="/2024/06/25/%E8%AF%BB%E8%AE%BA%E6%96%87/image-20240627103815515.png" alt="image-20240627103815515"></p>
@@ -326,7 +327,36 @@ mjx-container[display="true"] + br {
 <p>Q：</p>
 <p>A：</p>
 <h3 id="2-MRSC（Multi-granularity-Region-Similarity-Consistency）"><a href="#2-MRSC（Multi-granularity-Region-Similarity-Consistency）" class="headerlink" title="2.MRSC（Multi-granularity Region Similarity Consistency）"></a>2.MRSC（Multi-granularity Region Similarity Consistency）</h3><p>过完decoder之后的结果，做MRSC：</p>
-<p>先做颗粒度为g的区域投影-&gt; Flatten -&gt; </p>
+<p><img src="/2024/06/25/%E8%AF%BB%E8%AE%BA%E6%96%87/image-20240628103544797.png" alt="image-20240628103544797"></p>
+<p>先做颗粒度为g的区域投影-&gt; Flatten，区域投影可以用任意的下采样方式来实现（线性插值，pooling），然后计算区域相似度矩阵$A = RR^T$, 然后可以加入区域一致性损失，计算教师与学生之间的这个差异：</p>
+<p><img src="/2024/06/25/%E8%AF%BB%E8%AE%BA%E6%96%87/image-20240628103536611.png" alt="image-20240628103536611"></p>
+<p>因为有多个g，作为像素级的表征，本文采用了三个$G = {16,24,32}$,</p>
+<p>Q:</p>
+<p>A:</p>
+<p>最后是按照之前的半监督的损失，学生与老师预测得到的结果做损失：</p>
+<p><img src="/2024/06/25/%E8%AF%BB%E8%AE%BA%E6%96%87/image-20240628105112438.png" alt="image-20240628105112438"></p>
+<p>三个损失加起来，加上高斯warming up，得到模型的总损失</p>
+<p><img src="/2024/06/25/%E8%AF%BB%E8%AE%BA%E6%96%87/image-20240628105145729.png" alt="image-20240628105145729"></p>
+<h2 id="2-Collaboration-of-Teachers-for-Semi-supervised-Object-Detection"><a href="#2-Collaboration-of-Teachers-for-Semi-supervised-Object-Detection" class="headerlink" title="2.Collaboration of Teachers for Semi-supervised Object Detection"></a>2.Collaboration of Teachers for Semi-supervised Object Detection</h2><p>问题：</p>
+<ul>
+<li>学生教师模型过度耦合（over-coupling），在训练过程中，两个模型越来越相似</li>
+<li></li>
+</ul>
+<p>主要的四种学生模型的模式：</p>
+<p>(a) 普通的：低质量的伪标签会降低学习效果</p>
+<p>(b) 两个学生模型，加入了稳定性约束，用稳定的学生来知道不稳定的学生学习，但是稳定性约束有两个问题：一个是稳定性只是抗扰动的能力，不是说学到的就是正确的；二是本来稳定性就是在不确定的伪标签这单个样本上进行计算的，没有去统计所有的样本计算稳定度（我理解的就是可能这个模型只是在当前一个样本的伪标签上稳定性更高，但是并不是所有）</p>
+<p>(c)CST可以用于降低a中低质量伪标签的影响，但是会导致确认偏差问题</p>
+<p>(d) 提出的叫做 协作教师框架（Collaboration of Teacher Framework）（CTF）</p>
+<p><img src="/2024/06/25/%E8%AF%BB%E8%AE%BA%E6%96%87/image-20240628144911299.png" alt="image-20240628144911299"></p>
+<p>模型结构图：</p>
+<p><img src="/2024/06/25/%E8%AF%BB%E8%AE%BA%E6%96%87/image-20240628152153747.png" alt="image-20240628152153747"></p>
+<h3 id="初始化（burn-in-Phase"><a href="#初始化（burn-in-Phase" class="headerlink" title="初始化（burn-in Phase)"></a>初始化（burn-in Phase)</h3><p>（略，好像是有点trick，好像是先对$L_u$过一遍预测，然后选出置信度高的，拿去训练）</p>
+<h3 id="协同教师训练（CTF）"><a href="#协同教师训练（CTF）" class="headerlink" title="协同教师训练（CTF）"></a>协同教师训练（CTF）</h3><h2 id="3-Versatile-Teacher-A-Class-aware-Teacher-student-Framework-for-Cross-domain-Adaptation"><a href="#3-Versatile-Teacher-A-Class-aware-Teacher-student-Framework-for-Cross-domain-Adaptation" class="headerlink" title="3.Versatile Teacher: A Class-aware Teacher-student Framework for Cross-domain Adaptation"></a>3.Versatile Teacher: A Class-aware Teacher-student Framework for Cross-domain Adaptation</h2><p>介绍一个无监督自适应（Unsupervised Domain Adaptation）</p>
+<p>受到GAN的启发，DANN将鉴别器加入到网络结构中，在特征提取器和鉴别器之间形成对抗，这样可以使两个域的边缘分布变的更加的接近，</p>
+<p>网络图（绿色部分用于生成更可信的伪标签，主要创新点，其他的结构是AT：Adaptive Teacher的）</p>
+<p><img src="/2024/06/25/%E8%AF%BB%E8%AE%BA%E6%96%87/image-20240628155522453.png" alt="image-20240628155522453"></p>
+<h3 id="caps（Class-aware-Adaptively-Pseudo-label-Selection）"><a href="#caps（Class-aware-Adaptively-Pseudo-label-Selection）" class="headerlink" title="caps（Class-aware Adaptively Pseudo-label Selection）"></a>caps（Class-aware Adaptively Pseudo-label Selection）</h3><p>直接将得到的预测变为伪标签，容易降低模型的性能；采用固定阈值来过滤，不同类型的目标的检测难度不一样，直接应用全局阈值可能会忽略某些类别的可靠预测，<strong>所以需要对不同的类别设置类别感知阈值</strong></p>
+<p>consistent tracher：采用一维的高斯分布来建模网络是否接受伪标签的概率，但是不好处理非高斯分布</p>
 
       
     </div>
