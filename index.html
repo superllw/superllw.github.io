@@ -236,7 +236,7 @@ mjx-container[display="true"] + br {
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">17</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">18</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -246,7 +246,7 @@ mjx-container[display="true"] + br {
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">20</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">21</span></a>
 
   </li>
   </ul>
@@ -268,6 +268,86 @@ mjx-container[display="true"] + br {
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/07/17/%E5%9B%BE%E8%AE%BA%E7%AE%97%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="llw">
+      <meta itemprop="description" content="des">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="llw's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/07/17/%E5%9B%BE%E8%AE%BA%E7%AE%97%E6%B3%95/" class="post-title-link" itemprop="url">图论算法</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2024-07-17 10:42:16 / 修改时间：14:06:37" itemprop="dateCreated datePublished" datetime="2024-07-17T10:42:16+08:00">2024-07-17</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <span id="more"></span>
+<h1 id="1-DFS"><a href="#1-DFS" class="headerlink" title="1.DFS"></a>1.DFS</h1><hr>
+<h1 id="2-BFS"><a href="#2-BFS" class="headerlink" title="2.BFS"></a>2.BFS</h1><hr>
+<h1 id="3-拓扑排序"><a href="#3-拓扑排序" class="headerlink" title="3.拓扑排序"></a>3.拓扑排序</h1><hr>
+<h1 id="4-单源最短路：Dijkstra"><a href="#4-单源最短路：Dijkstra" class="headerlink" title="4.单源最短路：Dijkstra"></a>4.单源最短路：Dijkstra</h1><h2 id="4-1基础"><a href="#4-1基础" class="headerlink" title="4.1基础"></a>4.1基础</h2><p>将结点分成两个集合：已确定最短路长度的点集（记为$S$ 集合）的和未确定最短路长度的点集（记为 $T$集合）。一开始所有的点都属于$T$集合。</p>
+<p>初始化$dis(s) = 0$，其他点的 $dis$ 均为 <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="+\infty">。</p>
+<p>然后重复这些操作：</p>
+<ol>
+<li>从 $T$集合中，选取一个最短路长度最小的结点，移到$S$集合中。</li>
+<li>对那些刚刚被加入 $S$集合的结点的所有出边执行松弛操作。</li>
+</ol>
+<p>直到 $T$集合为空，算法结束。</p>
+<p>两种写法：暴力与优先队列</p>
+<h3 id="暴力-O-n-2"><a href="#暴力-O-n-2" class="headerlink" title="暴力$O(n^2)$"></a>暴力$O(n^2)$</h3><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Edge</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init</span>(<span class="params">self, v=<span class="number">0</span>, w=<span class="number">0</span></span>):</span><br><span class="line">        self.v = v</span><br><span class="line">        self.w = w</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">e = [[Edge() <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(maxn)] <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(maxn)]</span><br><span class="line">dis = [<span class="number">0x3F3F3F3F</span>] * maxn</span><br><span class="line">vis = [<span class="number">0</span>] * maxn</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">dijkstra</span>(<span class="params">n, s</span>):</span><br><span class="line">    dis[s] = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, n + <span class="number">1</span>):</span><br><span class="line">        u = <span class="number">0</span> <span class="comment"># 下一个最短的节点</span></span><br><span class="line">        mind = <span class="number">0x3F3F3F3F</span></span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, n + <span class="number">1</span>):</span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> vis[j] <span class="keyword">and</span> dis[j] &lt; mind:</span><br><span class="line">                u = j</span><br><span class="line">                mind = dis[j]</span><br><span class="line">        <span class="keyword">if</span> u == <span class="number">0</span>:</span><br><span class="line">          <span class="comment"># 全部访问过，或者有点不能到</span></span><br><span class="line">          <span class="keyword">break</span></span><br><span class="line">        vis[u] = <span class="literal">True</span></span><br><span class="line">        <span class="comment"># 更新到u之后后面的dis</span></span><br><span class="line">        <span class="keyword">for</span> ed <span class="keyword">in</span> e[u]:</span><br><span class="line">            v, w = ed.v, ed.w</span><br><span class="line">            <span class="keyword">if</span> dis[v] &gt; dis[u] + w:</span><br><span class="line">                dis[v] = dis[u] + w</span><br></pre></td></tr></table></figure>
+<h3 id="优先队列-O-mlogm"><a href="#优先队列-O-mlogm" class="headerlink" title="优先队列$O(mlogm)$"></a>优先队列$O(mlogm)$</h3><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">dijkstra</span>(<span class="params">e, s</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    输入：</span></span><br><span class="line"><span class="string">    e:邻接表</span></span><br><span class="line"><span class="string">    s:起点</span></span><br><span class="line"><span class="string">    返回：</span></span><br><span class="line"><span class="string">    dis:从s到每个顶点的最短路长度</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    dis = defaultdict(<span class="keyword">lambda</span>: <span class="built_in">float</span>(<span class="string">&quot;inf&quot;</span>))</span><br><span class="line">    dis[s] = <span class="number">0</span></span><br><span class="line">    q = [(<span class="number">0</span>, s)]</span><br><span class="line">    vis = <span class="built_in">set</span>()</span><br><span class="line">    <span class="keyword">while</span> q:</span><br><span class="line">        _, u = heapq.heappop(q)</span><br><span class="line">        <span class="keyword">if</span> u <span class="keyword">in</span> vis:</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        vis.add(u)</span><br><span class="line">        <span class="keyword">for</span> v, w <span class="keyword">in</span> e[u]:</span><br><span class="line">            <span class="keyword">if</span> dis[v] &gt; dis[u] + w:</span><br><span class="line">                dis[v] = dis[u] + w</span><br><span class="line">                heapq.heappush(q, (dis[v], v))</span><br><span class="line">    <span class="keyword">return</span> dis</span><br></pre></td></tr></table></figure>
+<h1 id="5-全源最短路：Floyd"><a href="#5-全源最短路：Floyd" class="headerlink" title="5.全源最短路：Floyd"></a>5.全源最短路：Floyd</h1><h2 id="5-1基础"><a href="#5-1基础" class="headerlink" title="5.1基础"></a>5.1基础</h2><p>定义一个数组$f[k][x][y]$,表示只允许经过节点$1$到$k$， 节点$x$到节点$y$的最短路径长度</p>
+<p>$f[0][x][y]$表示x与y之间的边权，没有直接连接的时候为$+\infty$,当相同的时候为0</p>
+<p>$f[k][x][y] = min(f[k-1][x][y], f[k-1][x][k]+ f[k-1][k][y])$</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> k <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, n + <span class="number">1</span>):</span><br><span class="line">    <span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, n + <span class="number">1</span>):</span><br><span class="line">        <span class="keyword">for</span> y <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, n + <span class="number">1</span>):</span><br><span class="line">            f[k][x][y] = <span class="built_in">min</span>(f[k - <span class="number">1</span>][x][y], f[k - <span class="number">1</span>][x][k] + f[k - <span class="number">1</span>][k][y])</span><br></pre></td></tr></table></figure>
+<p>跟dp一样，发现第一维是无用的，所以可以压缩</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> k <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, n + <span class="number">1</span>):</span><br><span class="line">    <span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, n + <span class="number">1</span>):</span><br><span class="line">        <span class="keyword">for</span> y <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, n + <span class="number">1</span>):</span><br><span class="line">            f[x][y] = <span class="built_in">min</span>(f[x][y], f[x][k] + f[k][y])</span><br></pre></td></tr></table></figure>
+<p>时间复杂度：$O(n^3)$</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -962,91 +1042,10 @@ mjx-container[display="true"] + br {
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/06/10/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="llw">
-      <meta itemprop="description" content="des">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="llw's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/06/10/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8/" class="post-title-link" itemprop="url">云服务器配置</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2024-06-10 13:40:01" itemprop="dateCreated datePublished" datetime="2024-06-10T13:40:01+08:00">2024-06-10</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-06-11 21:24:35" itemprop="dateModified" datetime="2024-06-11T21:24:35+08:00">2024-06-11</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/" itemprop="url" rel="index"><span itemprop="name">工具使用</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>记录一下腾讯云服务器的相关配置过程</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2024/06/10/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1112,7 +1111,7 @@ mjx-container[display="true"] + br {
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">20</span>
+          <span class="site-state-item-count">21</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1125,7 +1124,7 @@ mjx-container[display="true"] + br {
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-count">18</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
