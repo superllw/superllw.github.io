@@ -20,23 +20,20 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="使用go语言与数据库进行连接并且CRUD">
+  <meta name="description" content="数论+组合数学  1.数论1.1判断质数判断n是不是质数，有两种方法：一种是直接求到n所有的质数，用筛数法（参考1.2）；一种就是循环，看n有没有别的可以整除的数字（里面的细节就是只需要到$\sqrt{(n)} + 1 $就行 12345678910111213# 写法1：def is_prime(n: int) -&gt; bool:    i &#x3D; 2    while i * i &lt;&#x3D;">
 <meta property="og:type" content="article">
-<meta property="og:title" content="go使用mongoDB">
-<meta property="og:url" content="http://example.com/2024/06/16/go%E4%BD%BF%E7%94%A8mongoDB/index.html">
+<meta property="og:title" content="数学">
+<meta property="og:url" content="http://example.com/2024/08/02/%E6%95%B0%E5%AD%A6/index.html">
 <meta property="og:site_name" content="llw&#39;s blog">
-<meta property="og:description" content="使用go语言与数据库进行连接并且CRUD">
+<meta property="og:description" content="数论+组合数学  1.数论1.1判断质数判断n是不是质数，有两种方法：一种是直接求到n所有的质数，用筛数法（参考1.2）；一种就是循环，看n有没有别的可以整除的数字（里面的细节就是只需要到$\sqrt{(n)} + 1 $就行 12345678910111213# 写法1：def is_prime(n: int) -&gt; bool:    i &#x3D; 2    while i * i &lt;&#x3D;">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/2024/06/16/go%E4%BD%BF%E7%94%A8mongoDB/image-20240616224416510.png">
-<meta property="article:published_time" content="2024-06-16T14:35:13.215Z">
-<meta property="article:modified_time" content="2024-06-16T15:17:30.828Z">
+<meta property="article:published_time" content="2024-08-02T11:54:38.000Z">
+<meta property="article:modified_time" content="2024-08-02T13:46:23.622Z">
 <meta property="article:author" content="llw">
-<meta property="article:tag" content="MongoDB">
-<meta property="article:tag" content="Go">
+<meta property="article:tag" content="keyword">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2024/06/16/go%E4%BD%BF%E7%94%A8mongoDB/image-20240616224416510.png">
 
-<link rel="canonical" href="http://example.com/2024/06/16/go%E4%BD%BF%E7%94%A8mongoDB/">
+<link rel="canonical" href="http://example.com/2024/08/02/%E6%95%B0%E5%AD%A6/">
 
 
 <script id="page-configurations">
@@ -49,7 +46,7 @@
   };
 </script>
 
-  <title>go使用mongoDB | llw's blog</title>
+  <title>数学 | llw's blog</title>
   
 
 
@@ -80,119 +77,7 @@
   </style>
 </noscript>
 
-<style>mjx-container[jax="SVG"] {
-  direction: ltr;
-}
-
-mjx-container[jax="SVG"] > svg {
-  overflow: visible;
-}
-
-mjx-container[jax="SVG"][display="true"] {
-  display: block;
-  text-align: center;
-  margin: 1em 0;
-}
-
-mjx-container[jax="SVG"][justify="left"] {
-  text-align: left;
-}
-
-mjx-container[jax="SVG"][justify="right"] {
-  text-align: right;
-}
-
-g[data-mml-node="merror"] > g {
-  fill: red;
-  stroke: red;
-}
-
-g[data-mml-node="merror"] > rect[data-background] {
-  fill: yellow;
-  stroke: none;
-}
-
-g[data-mml-node="mtable"] > line[data-line] {
-  stroke-width: 70px;
-  fill: none;
-}
-
-g[data-mml-node="mtable"] > rect[data-frame] {
-  stroke-width: 70px;
-  fill: none;
-}
-
-g[data-mml-node="mtable"] > .mjx-dashed {
-  stroke-dasharray: 140;
-}
-
-g[data-mml-node="mtable"] > .mjx-dotted {
-  stroke-linecap: round;
-  stroke-dasharray: 0,140;
-}
-
-g[data-mml-node="mtable"] > svg {
-  overflow: visible;
-}
-
-[jax="SVG"] mjx-tool {
-  display: inline-block;
-  position: relative;
-  width: 0;
-  height: 0;
-}
-
-[jax="SVG"] mjx-tool > mjx-tip {
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
-mjx-tool > mjx-tip {
-  display: inline-block;
-  padding: .2em;
-  border: 1px solid #888;
-  font-size: 70%;
-  background-color: #F8F8F8;
-  color: black;
-  box-shadow: 2px 2px 5px #AAAAAA;
-}
-
-g[data-mml-node="maction"][data-toggle] {
-  cursor: pointer;
-}
-
-mjx-status {
-  display: block;
-  position: fixed;
-  left: 1em;
-  bottom: 1em;
-  min-width: 25%;
-  padding: .2em .4em;
-  border: 1px solid #888;
-  font-size: 90%;
-  background-color: #F8F8F8;
-  color: black;
-}
-
-foreignObject[data-mjx-xml] {
-  font-family: initial;
-  line-height: normal;
-  overflow: visible;
-}
-
-.MathJax path {
-  stroke-width: 3;
-}
-
-mjx-container[display="true"] {
-  overflow: auto hidden;
-}
-
-mjx-container[display="true"] + br {
-  display: none;
-}
-</style></head>
+</head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
   <div class="container use-motion">
@@ -278,7 +163,7 @@ mjx-container[display="true"] + br {
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/06/16/go%E4%BD%BF%E7%94%A8mongoDB/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/08/02/%E6%95%B0%E5%AD%A6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -291,7 +176,7 @@ mjx-container[display="true"] + br {
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          go使用mongoDB
+          数学
         </h1>
 
         <div class="post-meta">
@@ -302,16 +187,7 @@ mjx-container[display="true"] + br {
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2024-06-16 22:35:13 / 修改时间：23:17:30" itemprop="dateCreated datePublished" datetime="2024-06-16T22:35:13+08:00">2024-06-16</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a>
-                </span>
+              <time title="创建时间：2024-08-02 19:54:38 / 修改时间：21:46:23" itemprop="dateCreated datePublished" datetime="2024-08-02T19:54:38+08:00">2024-08-02</time>
             </span>
 
           
@@ -325,28 +201,19 @@ mjx-container[display="true"] + br {
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>使用go语言与数据库进行连接并且CRUD</p>
-<span id="more"></span>
-<p>首先是电脑得安装好go的环境，这里不再多说</p>
-<h1 id="1-建立开发环境"><a href="#1-建立开发环境" class="headerlink" title="1.建立开发环境"></a>1.建立开发环境</h1><p>简单来说就是新建一个go的工程文件，然后先在终端输入</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ go mod init &lt;name&gt;</span><br></pre></td></tr></table></figure>
-<p>名字随便取，然后会在你工程文件里面生成一个<code>go.mod</code>的文件</p>
-<p>然后安装驱动，mongoDB提供了mongo-go-driver，可以使用这个驱动连接数据库</p>
-<p>分别输入：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ go get go.mongodb.org/mongo-driver/mongo</span><br><span class="line">$ go get go.mongodb.org/mongo-driver/bson</span><br></pre></td></tr></table></figure>
-<p>现在初始要准备的就完成了：</p>
-<p><img src="/2024/06/16/go%E4%BD%BF%E7%94%A8mongoDB/image-20240616224416510.png" alt="image-20240616224416510"></p>
-<h1 id="2-连接数据库"><a href="#2-连接数据库" class="headerlink" title="2.连接数据库"></a>2.连接数据库</h1><p>新建一个go文件，然后开始进行数据库的连接</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> {</span><br><span class="line">  client1, err := mongo.Connect(context.TODO(), options.Client().ApplyURI(<span class="string">"mongodb://localhost:27017"</span>))</span><br><span class="line">  <span class="keyword">if</span> err != <span class="literal">nil</span> {</span><br><span class="line">    fmt.Println(err)</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
-<p>先来一个客户端的实例：<code>client</code></p>
-<p>然后再创建一个集合的实例</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">collection1 = client1.Database(<span class="string">"admin"</span>).Collection(<span class="string">"user"</span>)</span><br></pre></td></tr></table></figure>
-<p><code>Database</code> 对应的就是数据库的名称</p>
-<p><code>Collection</code>对应的就是集合的名称，相当于Mysql中的表名</p>
-<p>然后这就可以进行增删改查了</p>
-<p>写起来发现大多数都是重复性的内容，加上本来就会，然后官方文档里面都有增删改查的步骤，所以就不记录了。</p>
-<p>（因为我当时学这个是直接看的项目的代码，当时这一块是朱哥写的，所以我是直接看着他的代码然后再去看的官方文档里面的各种api，这里再贴一个官方文档的地址吧：<a target="_blank" rel="noopener" href="https://pkg.go.dev/go.mongodb.org/mongo-driver@v1.14.0/mongo#Collection）">https://pkg.go.dev/go.mongodb.org/mongo-driver@v1.14.0/mongo#Collection）</a></p>
-<hr>
+        <p>数论+组合数学</p>
+<!---more--->
+<h1 id="1-数论"><a href="#1-数论" class="headerlink" title="1.数论"></a>1.数论</h1><h2 id="1-1判断质数"><a href="#1-1判断质数" class="headerlink" title="1.1判断质数"></a>1.1判断质数</h2><p>判断n是不是质数，有两种方法：<br>一种是直接求到n所有的质数，用筛数法（参考1.2）；<br>一种就是循环，看n有没有别的可以整除的数字（里面的细节就是只需要到$\sqrt{(n)} + 1 $就行</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 写法1：</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">is_prime</span>(<span class="params">n: <span class="built_in">int</span></span>) -&gt; <span class="built_in">bool</span>:</span><br><span class="line">    i = <span class="number">2</span></span><br><span class="line">    <span class="keyword">while</span> i * i &lt;= n:</span><br><span class="line">        <span class="keyword">if</span> n % i == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">        i += <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> n &gt;= <span class="number">2</span>  <span class="comment"># 1 不是质数</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 写法2（代码少）</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">check</span>(<span class="params">n</span>):</span><br><span class="line">	<span class="keyword">return</span> n &gt;= <span class="number">2</span> <span class="keyword">and</span> <span class="built_in">all</span>(n % i != <span class="number">0</span> <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>， isqrt(n) + <span class="number">1</span>))</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="1-2筛质数（预处理）"><a href="#1-2筛质数（预处理）" class="headerlink" title="1.2筛质数（预处理）"></a>1.2筛质数（预处理）</h2><h3 id="埃氏筛："><a href="#埃氏筛：" class="headerlink" title="埃氏筛："></a><strong>埃氏筛</strong>：</h3><p>key：质数的倍数一定不是质数，然后就只需要遍历，没有被标记过的就是质数</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">MX =  <span class="comment"># 上界限</span></span><br><span class="line">primes = []</span><br><span class="line">is_prime = [<span class="literal">True</span>] * MX</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>, MX):</span><br><span class="line">    <span class="keyword">if</span> is_prime[i]:</span><br><span class="line">        primes.append(i)</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(i * i, MX, i):</span><br><span class="line">            is_prime[j] = <span class="literal">False</span></span><br><span class="line">primes.extend((MX, MX))  <span class="comment"># 保证下面下标不会越界</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>但是问题就是会把一个数重复标记</p>
+<h3 id="线性筛-欧拉筛）："><a href="#线性筛-欧拉筛）：" class="headerlink" title="线性筛(欧拉筛）："></a><strong>线性筛</strong>(欧拉筛）：</h3><p>每个合数只标记一次，时间复杂度O(n)</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">MX = <span class="number">10</span> ** <span class="number">6</span> + <span class="number">1</span></span><br><span class="line">primes = []</span><br><span class="line">is_prime = [<span class="literal">True</span>] * MX</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>, MX):</span><br><span class="line">    <span class="keyword">if</span> is_prime[i]:</span><br><span class="line">        primes.append(i)</span><br><span class="line">    <span class="keyword">for</span> p <span class="keyword">in</span> primes:</span><br><span class="line">        <span class="keyword">if</span> i * p &gt;= MX: <span class="keyword">break</span></span><br><span class="line">        is_prime[i * p] = <span class="literal">False</span></span><br><span class="line">        <span class="keyword">if</span> i % p == <span class="number">0</span>: <span class="keyword">break</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="1-3质因数分解"><a href="#1-3质因数分解" class="headerlink" title="1.3质因数分解"></a>1.3质因数分解</h2><p>分解质因数：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">i = <span class="number">2</span></span><br><span class="line"><span class="keyword">while</span> i * i &lt;= x:</span><br><span class="line">  <span class="keyword">if</span> x % i == <span class="number">0</span>:</span><br><span class="line">    s.add(i)</span><br><span class="line">    x //= i</span><br><span class="line">    <span class="keyword">while</span> x % i == <span class="number">0</span>:</span><br><span class="line">      x //= i</span><br><span class="line">      i += <span class="number">1</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>最后需要检查一下x，因为有可能剩下的x是质数</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> x &gt; <span class="number">1</span>:</span><br><span class="line">	<span class="comment"># 还要再加一个x</span></span><br></pre></td></tr></table></figure>
 
     </div>
 
@@ -355,10 +222,6 @@ mjx-container[display="true"] + br {
     
 
       <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/MongoDB/" rel="tag"># MongoDB</a>
-              <a href="/tags/Go/" rel="tag"># Go</a>
-          </div>
 
         
 
@@ -366,13 +229,10 @@ mjx-container[display="true"] + br {
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2024/06/16/mongodb%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2/" rel="prev" title="mongodb集群部署">
-      <i class="fa fa-chevron-left"></i> mongodb集群部署
+    <a href="/2024/07/17/%E5%9B%BE%E8%AE%BA%E7%AE%97%E6%B3%95/" rel="prev" title="图论算法">
+      <i class="fa fa-chevron-left"></i> 图论算法
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2024/06/23/dp/" rel="next" title="动态规划">
-      动态规划 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -431,7 +291,7 @@ mjx-container[display="true"] + br {
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E5%BB%BA%E7%AB%8B%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83"><span class="nav-number">1.</span> <span class="nav-text">1.建立开发环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E8%BF%9E%E6%8E%A5%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">2.</span> <span class="nav-text">2.连接数据库</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E6%95%B0%E8%AE%BA"><span class="nav-number">1.</span> <span class="nav-text">1.数论</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1%E5%88%A4%E6%96%AD%E8%B4%A8%E6%95%B0"><span class="nav-number">1.1.</span> <span class="nav-text">1.1判断质数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2%E7%AD%9B%E8%B4%A8%E6%95%B0%EF%BC%88%E9%A2%84%E5%A4%84%E7%90%86%EF%BC%89"><span class="nav-number">1.2.</span> <span class="nav-text">1.2筛质数（预处理）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%83%E6%B0%8F%E7%AD%9B%EF%BC%9A"><span class="nav-number">1.2.1.</span> <span class="nav-text">埃氏筛：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%BF%E6%80%A7%E7%AD%9B-%E6%AC%A7%E6%8B%89%E7%AD%9B%EF%BC%89%EF%BC%9A"><span class="nav-number">1.2.2.</span> <span class="nav-text">线性筛(欧拉筛）：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3%E8%B4%A8%E5%9B%A0%E6%95%B0%E5%88%86%E8%A7%A3"><span class="nav-number">1.3.</span> <span class="nav-text">1.3质因数分解</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
