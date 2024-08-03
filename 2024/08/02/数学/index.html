@@ -20,17 +20,19 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="数论+组合数学  1.数论1.1判断质数判断n是不是质数，有两种方法：一种是直接求到n所有的质数，用筛数法（参考1.2）；一种就是循环，看n有没有别的可以整除的数字（里面的细节就是只需要到$\sqrt{(n)} + 1 $就行 12345678910111213# 写法1：def is_prime(n: int) -&gt; bool:    i &#x3D; 2    while i * i &lt;&#x3D;">
+  <meta name="description" content="数论+组合数学">
 <meta property="og:type" content="article">
 <meta property="og:title" content="数学">
 <meta property="og:url" content="http://example.com/2024/08/02/%E6%95%B0%E5%AD%A6/index.html">
 <meta property="og:site_name" content="llw&#39;s blog">
-<meta property="og:description" content="数论+组合数学  1.数论1.1判断质数判断n是不是质数，有两种方法：一种是直接求到n所有的质数，用筛数法（参考1.2）；一种就是循环，看n有没有别的可以整除的数字（里面的细节就是只需要到$\sqrt{(n)} + 1 $就行 12345678910111213# 写法1：def is_prime(n: int) -&gt; bool:    i &#x3D; 2    while i * i &lt;&#x3D;">
+<meta property="og:description" content="数论+组合数学">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-08-02T11:54:38.000Z">
-<meta property="article:modified_time" content="2024-08-02T13:46:23.622Z">
+<meta property="article:published_time" content="2024-08-02T11:54:38.089Z">
+<meta property="article:modified_time" content="2024-08-03T02:17:08.317Z">
 <meta property="article:author" content="llw">
-<meta property="article:tag" content="keyword">
+<meta property="article:tag" content="leetcode">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="数学">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="http://example.com/2024/08/02/%E6%95%B0%E5%AD%A6/">
@@ -77,7 +79,119 @@
   </style>
 </noscript>
 
-</head>
+<style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
   <div class="container use-motion">
@@ -126,7 +240,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">18</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">19</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -185,9 +299,24 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2024-08-02 19:54:38 / 修改时间：21:46:23" itemprop="dateCreated datePublished" datetime="2024-08-02T19:54:38+08:00">2024-08-02</time>
+              <time title="创建时间：2024-08-02 19:54:38" itemprop="dateCreated datePublished" datetime="2024-08-02T19:54:38+08:00">2024-08-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-08-03 10:17:08" itemprop="dateModified" datetime="2024-08-03T10:17:08+08:00">2024-08-03</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
+                </span>
             </span>
 
           
@@ -202,8 +331,8 @@
 
       
         <p>数论+组合数学</p>
-<!---more--->
-<h1 id="1-数论"><a href="#1-数论" class="headerlink" title="1.数论"></a>1.数论</h1><h2 id="1-1判断质数"><a href="#1-1判断质数" class="headerlink" title="1.1判断质数"></a>1.1判断质数</h2><p>判断n是不是质数，有两种方法：<br>一种是直接求到n所有的质数，用筛数法（参考1.2）；<br>一种就是循环，看n有没有别的可以整除的数字（里面的细节就是只需要到$\sqrt{(n)} + 1 $就行</p>
+<span id="more"></span>
+<h1 id="1-数论"><a href="#1-数论" class="headerlink" title="1.数论"></a>1.数论</h1><h2 id="1-1判断质数"><a href="#1-1判断质数" class="headerlink" title="1.1判断质数"></a>1.1判断质数</h2><p>判断n是不是质数，有两种方法：<br>一种是直接求到n所有的质数，用筛数法（参考1.2）；<br>一种就是循环，看n有没有别的可以整除的数字（里面的细节就是只需要到<mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.639ex;" xmlns="http://www.w3.org/2000/svg" width="9.322ex" height="2.851ex" role="img" focusable="false" viewbox="0 -977.5 4120.4 1260"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msqrt"><g transform="translate(1020,0)"><g data-mml-node="mo"><path data-c="28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"/></g><g data-mml-node="mi" transform="translate(389,0)"><path data-c="1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"/></g><g data-mml-node="mo" transform="translate(989,0)"><path data-c="29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"/></g></g><g data-mml-node="mo" transform="translate(0,67.5)"><path data-c="221A" d="M263 249Q264 249 315 130T417 -108T470 -228L725 302Q981 837 982 839Q989 850 1001 850Q1008 850 1013 844T1020 832V826L741 243Q645 43 540 -176Q479 -303 469 -324T453 -348Q449 -350 436 -350L424 -349L315 -96Q206 156 205 156L171 130Q138 104 137 104L111 130L263 249Z"/></g><rect width="1378" height="60" x="1020" y="857.5"/></g><g data-mml-node="mo" transform="translate(2620.2,0)"><path data-c="2B" d="M56 237T56 250T70 270H369V420L370 570Q380 583 389 583Q402 583 409 568V270H707Q722 262 722 250T707 230H409V-68Q401 -82 391 -82H389H387Q375 -82 369 -68V230H70Q56 237 56 250Z"/></g><g data-mml-node="mn" transform="translate(3620.4,0)"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"/></g></g></g></svg></mjx-container>就行</p>
 <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 写法1：</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">is_prime</span>(<span class="params">n: <span class="built_in">int</span></span>) -&gt; <span class="built_in">bool</span>:</span><br><span class="line">    i = <span class="number">2</span></span><br><span class="line">    <span class="keyword">while</span> i * i &lt;= n:</span><br><span class="line">        <span class="keyword">if</span> n % i == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">        i += <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> n &gt;= <span class="number">2</span>  <span class="comment"># 1 不是质数</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 写法2（代码少）</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">check</span>(<span class="params">n</span>):</span><br><span class="line">	<span class="keyword">return</span> n &gt;= <span class="number">2</span> <span class="keyword">and</span> <span class="built_in">all</span>(n % i != <span class="number">0</span> <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>， isqrt(n) + <span class="number">1</span>))</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <h2 id="1-2筛质数（预处理）"><a href="#1-2筛质数（预处理）" class="headerlink" title="1.2筛质数（预处理）"></a>1.2筛质数（预处理）</h2><h3 id="埃氏筛："><a href="#埃氏筛：" class="headerlink" title="埃氏筛："></a><strong>埃氏筛</strong>：</h3><p>key：质数的倍数一定不是质数，然后就只需要遍历，没有被标记过的就是质数</p>
 <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">MX =  <span class="comment"># 上界限</span></span><br><span class="line">primes = []</span><br><span class="line">is_prime = [<span class="literal">True</span>] * MX</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>, MX):</span><br><span class="line">    <span class="keyword">if</span> is_prime[i]:</span><br><span class="line">        primes.append(i)</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(i * i, MX, i):</span><br><span class="line">            is_prime[j] = <span class="literal">False</span></span><br><span class="line">primes.extend((MX, MX))  <span class="comment"># 保证下面下标不会越界</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
@@ -222,6 +351,11 @@
     
 
       <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/leetcode/" rel="tag"># leetcode</a>
+              <a href="/tags/python/" rel="tag"># python</a>
+              <a href="/tags/%E6%95%B0%E5%AD%A6/" rel="tag"># 数学</a>
+          </div>
 
         
 
@@ -318,7 +452,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-count">19</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

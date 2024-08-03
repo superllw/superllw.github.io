@@ -236,7 +236,7 @@ mjx-container[display="true"] + br {
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">18</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">19</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -295,9 +295,24 @@ mjx-container[display="true"] + br {
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2024-08-02 19:54:38 / 修改时间：21:46:23" itemprop="dateCreated datePublished" datetime="2024-08-02T19:54:38+08:00">2024-08-02</time>
+              <time title="创建时间：2024-08-02 19:54:38" itemprop="dateCreated datePublished" datetime="2024-08-02T19:54:38+08:00">2024-08-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-08-03 10:17:08" itemprop="dateModified" datetime="2024-08-03T10:17:08+08:00">2024-08-03</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
+                </span>
             </span>
 
           
@@ -312,19 +327,14 @@ mjx-container[display="true"] + br {
 
       
           <p>数论+组合数学</p>
-<!---more--->
-<h1 id="1-数论"><a href="#1-数论" class="headerlink" title="1.数论"></a>1.数论</h1><h2 id="1-1判断质数"><a href="#1-1判断质数" class="headerlink" title="1.1判断质数"></a>1.1判断质数</h2><p>判断n是不是质数，有两种方法：<br>一种是直接求到n所有的质数，用筛数法（参考1.2）；<br>一种就是循环，看n有没有别的可以整除的数字（里面的细节就是只需要到$\sqrt{(n)} + 1 $就行</p>
-<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 写法1：</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">is_prime</span>(<span class="params">n: <span class="built_in">int</span></span>) -&gt; <span class="built_in">bool</span>:</span><br><span class="line">    i = <span class="number">2</span></span><br><span class="line">    <span class="keyword">while</span> i * i &lt;= n:</span><br><span class="line">        <span class="keyword">if</span> n % i == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">        i += <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> n &gt;= <span class="number">2</span>  <span class="comment"># 1 不是质数</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 写法2（代码少）</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">check</span>(<span class="params">n</span>):</span><br><span class="line">	<span class="keyword">return</span> n &gt;= <span class="number">2</span> <span class="keyword">and</span> <span class="built_in">all</span>(n % i != <span class="number">0</span> <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>， isqrt(n) + <span class="number">1</span>))</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h2 id="1-2筛质数（预处理）"><a href="#1-2筛质数（预处理）" class="headerlink" title="1.2筛质数（预处理）"></a>1.2筛质数（预处理）</h2><h3 id="埃氏筛："><a href="#埃氏筛：" class="headerlink" title="埃氏筛："></a><strong>埃氏筛</strong>：</h3><p>key：质数的倍数一定不是质数，然后就只需要遍历，没有被标记过的就是质数</p>
-<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">MX =  <span class="comment"># 上界限</span></span><br><span class="line">primes = []</span><br><span class="line">is_prime = [<span class="literal">True</span>] * MX</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>, MX):</span><br><span class="line">    <span class="keyword">if</span> is_prime[i]:</span><br><span class="line">        primes.append(i)</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(i * i, MX, i):</span><br><span class="line">            is_prime[j] = <span class="literal">False</span></span><br><span class="line">primes.extend((MX, MX))  <span class="comment"># 保证下面下标不会越界</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>但是问题就是会把一个数重复标记</p>
-<h3 id="线性筛-欧拉筛）："><a href="#线性筛-欧拉筛）：" class="headerlink" title="线性筛(欧拉筛）："></a><strong>线性筛</strong>(欧拉筛）：</h3><p>每个合数只标记一次，时间复杂度O(n)</p>
-<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">MX = <span class="number">10</span> ** <span class="number">6</span> + <span class="number">1</span></span><br><span class="line">primes = []</span><br><span class="line">is_prime = [<span class="literal">True</span>] * MX</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>, MX):</span><br><span class="line">    <span class="keyword">if</span> is_prime[i]:</span><br><span class="line">        primes.append(i)</span><br><span class="line">    <span class="keyword">for</span> p <span class="keyword">in</span> primes:</span><br><span class="line">        <span class="keyword">if</span> i * p &gt;= MX: <span class="keyword">break</span></span><br><span class="line">        is_prime[i * p] = <span class="literal">False</span></span><br><span class="line">        <span class="keyword">if</span> i % p == <span class="number">0</span>: <span class="keyword">break</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h2 id="1-3质因数分解"><a href="#1-3质因数分解" class="headerlink" title="1.3质因数分解"></a>1.3质因数分解</h2><p>分解质因数：</p>
-<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">i = <span class="number">2</span></span><br><span class="line"><span class="keyword">while</span> i * i &lt;= x:</span><br><span class="line">  <span class="keyword">if</span> x % i == <span class="number">0</span>:</span><br><span class="line">    s.add(i)</span><br><span class="line">    x //= i</span><br><span class="line">    <span class="keyword">while</span> x % i == <span class="number">0</span>:</span><br><span class="line">      x //= i</span><br><span class="line">      i += <span class="number">1</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>最后需要检查一下x，因为有可能剩下的x是质数</p>
-<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> x &gt; <span class="number">1</span>:</span><br><span class="line">	<span class="comment"># 还要再加一个x</span></span><br></pre></td></tr></table></figure>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2024/08/02/%E6%95%B0%E5%AD%A6/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1120,7 +1130,7 @@ mjx-container[display="true"] + br {
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-count">19</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
