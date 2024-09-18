@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="学习的资料是：《Vim实用技巧》， 先使用自带的vimtutor进行上手">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vim学习笔记">
+<meta property="og:url" content="http://example.com/2024/06/01/Vim%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="llw&#39;s blog">
+<meta property="og:description" content="学习的资料是：《Vim实用技巧》， 先使用自带的vimtutor进行上手">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-06-01T12:27:04.624Z">
+<meta property="article:modified_time" content="2024-08-27T09:18:12.222Z">
+<meta property="article:author" content="llw">
+<meta property="article:tag" content="Vim">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2024/06/01/Vim%E5%AD%A6%E4%B9%A0/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Vim学习笔记 | llw's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">llw's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">心之所向 素履以往</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">24</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">12</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">29</span></a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/06/01/Vim%E5%AD%A6%E4%B9%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="llw">
+      <meta itemprop="description" content="des">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="llw's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Vim学习笔记
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-06-01 20:27:04" itemprop="dateCreated datePublished" datetime="2024-06-01T20:27:04+08:00">2024-06-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-08-27 17:18:12" itemprop="dateModified" datetime="2024-08-27T17:18:12+08:00">2024-08-27</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/" itemprop="url" rel="index"><span itemprop="name">工具使用</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>学习的资料是：《Vim实用技巧》，</p>
+<p>先使用自带的vimtutor进行上手</p>
+<span id="more"></span>
+<h2 id="基础操作"><a href="#基础操作" class="headerlink" title="基础操作"></a>基础操作</h2><p>这些基础操作可以简单的上手vim，如果需要更近一步，需要看之后的部分</p>
+<p><strong>h </strong> 左， （在最左边）</p>
+<p><strong>l</strong>  右， （在最右边）</p>
+<p><strong>j</strong> 下，（看起来像一个向下的箭头）</p>
+<p><strong>k</strong> 上</p>
+<p><strong>w</strong> 下一个字开头</p>
+<p><strong>e</strong> 下一个字结尾</p>
+<p><strong>b</strong> 上一个字的开头</p>
+<p><strong>gg / shift + g</strong> 文章开头 / 文章末尾</p>
+<p><strong>:q!</strong> 直接退出，不保存</p>
+<p><strong>:wq</strong> 保存并退出    </p>
+<hr>
+<p><strong>x</strong> 删除当前字符</p>
+<p><strong>shift + x</strong> 从后往前删除光标所在位置</p>
+<p><strong>dd</strong> 删除当前行</p>
+<hr>
+<p><strong>i</strong> 插入文本，当前位置进入插入模式</p>
+<p><strong>o</strong> 下一行插入文本</p>
+<p><strong>a</strong> 当前位置插入</p>
+<p><strong>A</strong> 添加内容</p>
+<hr>
+<p><strong>yy</strong> 复制当前行</p>
+<p><strong>p</strong> 粘 ， 小写在光标位置之后，大写在之前</p>
+<h2 id="大范围移动操作"><a href="#大范围移动操作" class="headerlink" title="大范围移动操作"></a>大范围移动操作</h2><p><code>[number]</code> 向下移动多少行（最常用）</p>
+<p><code>[number] + [space]</code> 输入一个数字，再按空格，光标向右移动number个字符</p>
+<p><code>e</code> 移动到<strong>下一个</strong>单词的<strong>末尾</strong>（end）</p>
+<p><code>w</code> 移动到<strong>下一个</strong>单词的<strong>开头</strong></p>
+<p><code>b</code> 移动到<strong>上一个</strong>单词的<strong>开头</strong></p>
+<p><code>ge</code> 移动到<strong>上一个</strong>单词的<strong>末尾</strong>ljjlll</p>
+<p><code>ctrl + f</code> 下一页，相当于page down</p>
+<p><code>ctrl + b</code> 上一页，相当于page up</p>
+<p><code>ctrl + d</code> 向下移动半页</p>
+<p><code>ctrl + u</code> 向上移动半页</p>
+<p><code>H</code> 移动到屏幕最<strong>上面</strong>行的第一个字符</p>
+<p><code>M</code> 移动到屏幕最<strong>中央</strong>行的第一个字符</p>
+<p><code>L</code> 移动到屏幕最<strong>下面</strong>行的第一个字符</p>
+<p><code>G</code> 移动到<strong>文档</strong>的最后一行</p>
+<p><code>[number] + G</code> 移动到<strong>文档</strong>的第number行(常用)</p>
+<p><code>0</code> 跳转到当前行的最前面</p>
+<h2 id="删除类指令"><a href="#删除类指令" class="headerlink" title="删除类指令"></a>删除类指令</h2><p>许多的命令都是由一个操作符和一个动作构成，删除的命令格式如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">d motion</span><br></pre></td></tr></table></figure>
+<p><strong>x</strong> 删除光标处的单词</p>
+<p><strong>dw</strong> 删除单词（delete word）</p>
+<p><strong>de</strong> 删除当前位置到单词末尾，包括最后一个字符，dw只删除单词，de删除到下一个单词，假如两个单词之间有多个空格啥的，de全删，dw不删</p>
+<p><strong>d$</strong> 从光标处删除到当前行尾部</p>
+<blockquote>
+<p>在动作前面输入数字会使他重复那么多次<br>可以通过输入计数器的方式，删除多个</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">d   number(数字)   motion</span><br></pre></td></tr></table></figure>
+<p><strong>dd</strong> 删除整行，同理可以使用计数器删除多行：<strong>2dd</strong></p>
+<p><strong>u</strong> 可以撤销最后的指令 （ctrl+r）</p>
+<p><strong>U</strong> 可以撤销整行的指令</p>
+<h2 id="置入类指令"><a href="#置入类指令" class="headerlink" title="置入类指令"></a>置入类指令</h2><p>与删除类指令相同，置换类也可以用命令加操作符完成：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">c   [number]    motion</span><br></pre></td></tr></table></figure>
+<p>动作参数(motion)也是一样的，比如 <code>w</code> 代表单词，<code>$</code>代表行末等等</p>
+<p><code>y</code> 复制所选内容</p>
+<p><code>yy</code> 复制当前行</p>
+<p><code>p</code> 粘贴（Paste），使用<code>dd</code>删除之后，内容会保存到vim的<strong>寄存器</strong>里面（感觉相当于windows的剪切板），然后可以使用<code>p</code>指令将寄存器中的内容粘贴</p>
+<p><code>r</code> 替换（repalce），输入<code>r</code>和一个字符，可以替换光标所在位置的字符</p>
+<p><code>d</code> 剪切</p>
+<p><code>ce</code>改变文本直到一个单词的末尾（change end）， 相当于改变</p>
+<p>一共11个粘贴板，分别是<code>0 ~ 9</code>， <code>a, "</code>，如果开启系统剪贴板，有两个是<code>+ , *</code>。 使用 <code>:reg</code>可以查看各个剪贴板里面的内容 ，默认使用的<code>y, p</code>都是从<code>"</code>剪贴板中进行复制粘贴</p>
+<p><code>粘贴板号 + y/p</code>可以指定粘贴板复制粘贴（正常模式）</p>
+<h2 id="位置类指令"><a href="#位置类指令" class="headerlink" title="位置类指令"></a>位置类指令</h2><p><code>Ctrl + g</code>可以查看当前行的信息，可以看目前在全文的多少行</p>
+<p><code>[number]  + G</code> 跳转到多少行</p>
+<p><code>G</code>文件最后一行</p>
+<p><code>gg</code>文件第一行</p>
+<p><code>/ + [字符串]</code> 可以查找当前文件中查找该字符串(<strong>往后</strong>)</p>
+<p><code>？ + [字符串]</code> 可以向前查找文件中的该字符串(<strong>往前</strong>)</p>
+<p><code>n</code> （next）<strong>与指令相同方向</strong>下一个</p>
+<p><code>N</code> （Next）<strong>与指令相反方向</strong>下一个</p>
+<p><code>Ctrl + o</code> 回退</p>
+<p><code>%</code> 把光标放到括号的位置，按<code>%</code>后跳到匹配的括号的位置，再按一次回到配对的第一个括号的地方</p>
+<p><code>:s/old/new/g</code> 可以替换 old 为 new(常用)</p>
+<ul>
+<li><code>:#,#s/old/new/g</code> 其中 #,# 代表的是替换操作的若干行中首尾两行的行号。</li>
+<li><code>:%s/old/new/g</code>替换整个文件中的每个匹配串</li>
+<li><code>:%s/old/new/gc</code> 会找到整个文件中的每个匹配串，并且对每个匹配串提示是否进行替换。</li>
+<li>这三个都挺常用的</li>
+</ul>
+<h2 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h2><p><code>:![外部命令：如ls，cd这种]</code> 执行外部的shell命令</p>
+<p><code>:w [文件名]</code> 将当前文件保存到<code>文件名</code>这个文件中</p>
+<p><code>v + :w filename</code> 可以只保存用v选中的内容到filename文件中</p>
+<p><code>:r filename</code> 提取filename的文件插入到当前文件中</p>
+<p><code>o</code> 在当前的下面新建一行，进入编辑模式</p>
+<p><code>O</code>（大写的o) 在上面新建一行，进入编辑模式</p>
+<p><code>a</code> 光标之后插入文本</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Vim/" rel="tag"># Vim</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/05/31/pytorch-lighting%E4%BD%BF%E7%94%A8/" rel="prev" title="PyTorch-lighting使用">
+      <i class="fa fa-chevron-left"></i> PyTorch-lighting使用
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/06/03/git%E6%93%8D%E4%BD%9C/" rel="next" title="Git操作">
+      Git操作 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C"><span class="nav-number">1.</span> <span class="nav-text">基础操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%A7%E8%8C%83%E5%9B%B4%E7%A7%BB%E5%8A%A8%E6%93%8D%E4%BD%9C"><span class="nav-number">2.</span> <span class="nav-text">大范围移动操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E7%B1%BB%E6%8C%87%E4%BB%A4"><span class="nav-number">3.</span> <span class="nav-text">删除类指令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%AE%E5%85%A5%E7%B1%BB%E6%8C%87%E4%BB%A4"><span class="nav-number">4.</span> <span class="nav-text">置入类指令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%8D%E7%BD%AE%E7%B1%BB%E6%8C%87%E4%BB%A4"><span class="nav-number">5.</span> <span class="nav-text">位置类指令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4"><span class="nav-number">6.</span> <span class="nav-text">命令</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">llw</p>
+  <div class="site-description" itemprop="description">des</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">llw</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>

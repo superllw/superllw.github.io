@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="使用的是docker部署mongoDB，项目需要用到集群，作为记录">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mongodb集群部署">
+<meta property="og:url" content="http://example.com/2024/06/16/mongodb%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2/index.html">
+<meta property="og:site_name" content="llw&#39;s blog">
+<meta property="og:description" content="使用的是docker部署mongoDB，项目需要用到集群，作为记录">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2024/06/16/mongodb%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2/image-20240616210616088.png">
+<meta property="og:image" content="http://example.com/2024/06/16/mongodb%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2/image-20240616222540992.png">
+<meta property="og:image" content="http://example.com/2024/06/16/mongodb%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2/image-20240616223057619.png">
+<meta property="og:image" content="http://example.com/2024/06/16/mongodb%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2/image-20240616223237747.png">
+<meta property="og:image" content="http://example.com/2024/06/16/mongodb%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2/1711519-20190613155552744-360066161.png">
+<meta property="og:image" content="http://example.com/2024/06/16/mongodb%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2/c65707738fb30fbe8edfa582d1c0a173.png">
+<meta property="og:image" content="http://example.com/2024/06/16/mongodb%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2/image-20240620205516838.png">
+<meta property="og:image" content="http://example.com/2024/06/16/mongodb%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2/image-20240620210109857.png">
+<meta property="og:image" content="http://example.com/2024/06/16/mongodb%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2/image-20240620210559961.png">
+<meta property="og:image" content="http://example.com/2024/06/16/mongodb%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2/image-20240620212356697.png">
+<meta property="og:image" content="http://example.com/2024/06/16/mongodb%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2/image-20240621095700053.png">
+<meta property="og:image" content="http://example.com/2024/06/16/mongodb%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2/image-20240621095734547.png">
+<meta property="article:published_time" content="2024-06-16T11:49:23.461Z">
+<meta property="article:modified_time" content="2024-06-22T01:00:57.342Z">
+<meta property="article:author" content="llw">
+<meta property="article:tag" content="Docker">
+<meta property="article:tag" content="MongoDB">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2024/06/16/mongodb%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2/image-20240616210616088.png">
+
+<link rel="canonical" href="http://example.com/2024/06/16/mongodb%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>mongodb集群部署 | llw's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">llw's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">心之所向 素履以往</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">24</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">12</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">29</span></a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/06/16/mongodb%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="llw">
+      <meta itemprop="description" content="des">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="llw's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          mongodb集群部署
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-06-16 19:49:23" itemprop="dateCreated datePublished" datetime="2024-06-16T19:49:23+08:00">2024-06-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-06-22 09:00:57" itemprop="dateModified" datetime="2024-06-22T09:00:57+08:00">2024-06-22</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8/" itemprop="url" rel="index"><span itemprop="name">服务器</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>使用的是docker部署mongoDB，项目需要用到集群，作为记录</p>
+<span id="more"></span>
+<h1 id="1-单台容器的使用"><a href="#1-单台容器的使用" class="headerlink" title="1.单台容器的使用"></a>1.单台容器的使用</h1><p>最好是有之前的基础，如果有看不懂的，可以看看之前的博客：</p>
+<p><code>docker</code> , <code>docker使用</code></p>
+<h2 id="1-1准备"><a href="#1-1准备" class="headerlink" title="1.1准备"></a>1.1准备</h2><p><code>docker pull mongo &lt;&gt;</code> 拉取镜像，里面填id</p>
+<p>准备要挂载的卷</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> <span class="built_in">test</span></span><br></pre></td></tr></table></figure>
+<p>运行容器，加上挂载的卷</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -itd --name mongotest -v ~/test:/data/db -p 27017:27017 mongo</span><br></pre></td></tr></table></figure>
+<p>可以查看一下挂载的情况：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker inspect &lt;<span class="built_in">id</span>&gt;</span><br></pre></td></tr></table></figure>
+<p><img src="/2024/06/16/mongodb%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2/image-20240616210616088.png" alt="image-20240616210616088"></p>
+<h2 id="1-2登陆"><a href="#1-2登陆" class="headerlink" title="1.2登陆"></a>1.2登陆</h2><p>进入admin数据库</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">exec</span> -it mongotest mongosh admin</span><br></pre></td></tr></table></figure>
+<p>然后创建用户，因为默认没有用户，需要自己创建</p>
+<p>使用<code>db.createUser()</code>,其中需要三个参数（更多的参数参考mongoDB官方文档）：</p>
+<p><code>user</code>: 用户名</p>
+<p><code>pwd</code>: 登陆密码</p>
+<p><code>roles</code>: 授予用户的角色，可以为空数组</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.createUser({user:<span class="string">'root'</span>, <span class="built_in">pwd</span>:<span class="string">'123456'</span>,roles:[{role:<span class="string">'userAdminAnyDatabase'</span>,db:<span class="string">'admin'</span>},<span class="string">'readWriteAnyDatabase'</span>]})</span><br></pre></td></tr></table></figure>
+<p><img src="/2024/06/16/mongodb%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2/image-20240616222540992.png" alt="image-20240616222540992"></p>
+<h2 id="1-3链接"><a href="#1-3链接" class="headerlink" title="1.3链接"></a>1.3链接</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.auth(<span class="string">'root'</span>,<span class="string">'123456'</span>)</span><br></pre></td></tr></table></figure>
+<p>然后链接上后可以命令行插入数据：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.user.insertOne(&lt;你想插入的内容&gt;)</span><br></pre></td></tr></table></figure>
+<p><img src="/2024/06/16/mongodb%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2/image-20240616223057619.png" alt="image-20240616223057619"></p>
+<p>成功之后会给如上的返回，进入到compass中可以看到我们刚才插入的数据：</p>
+<p><img src="/2024/06/16/mongodb%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2/image-20240616223237747.png" alt="image-20240616223237747"></p>
+<p>也可以使用go或者别的什么语言，对数据库进行连接和crud，（go的写了一个博客，可以参考一下）</p>
+<h1 id="2-部署分片集群"><a href="#2-部署分片集群" class="headerlink" title="2.部署分片集群"></a>2.部署分片集群</h1><p>整体的构造图如下：</p>
+<p><img src="/2024/06/16/mongodb%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2/1711519-20190613155552744-360066161.png" alt="img"></p>
+<p><code>mongos</code>：数据路由，跟客户端打交道</p>
+<p><code>config server</code> 所有shard节点的信息，分片的配置信息</p>
+<p><code>shard</code> 真正数据存放的位置（以块为存储的单位<code>chunk</code>)</p>
+<p><code>chunk</code> 内部存储的大小，如果超过了配置中的size，后台切分为更小的chunk（默认64M）</p>
+<p><code>shard key</code> 分片键，</p>
+<hr>
+<p>我现在有一个云服务器，一个主机，我主机开两个</p>
+<p>我的思路是使用docker模拟一台服务器，然后开三个docker模拟三台服务器</p>
+<p>配置的信息：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>mongo1</th>
+<th>mongo2</th>
+<th>mongos</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ip</td>
+<td>172.17.0.2</td>
+<td>172.17.0.3</td>
+<td>172.17.0.4</td>
+</tr>
+<tr>
+<td>端口</td>
+<td>27017:27017</td>
+<td>27018:27018</td>
+<td>27019:27019</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="2-1部署两台分片服务器"><a href="#2-1部署两台分片服务器" class="headerlink" title="2.1部署两台分片服务器"></a>2.1部署两台分片服务器</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">docker run -itd \</span><br><span class="line">&gt; --name mongo2 \</span><br><span class="line">&gt; -v ~/mongo/data/sever2:/data/db \</span><br><span class="line">&gt; -p 27018:27018 \</span><br><span class="line">&gt; mongo</span><br></pre></td></tr></table></figure>
+<p>这个是按照默认的<code>conf</code>启动的服务，但是要更改之后按<code>conf</code>启动服务</p>
+<p>然后分别进入容器，编写<code>conf</code>文件，记得不同的主机开的服务的端口不一样，做了端口映射的</p>
+<p><code>data/</code>下建立<code>sd1.conf</code>:</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">dbpath=/data/sd1/</span><br><span class="line"><span class="comment">#where to log</span></span><br><span class="line">logpath=/data/log/sd1.<span class="built_in">log</span></span><br><span class="line">logappend=<span class="literal">true</span></span><br><span class="line">fork=<span class="literal">true</span></span><br><span class="line">port=27017</span><br><span class="line">replSet=sd1</span><br><span class="line">shardsvr=<span class="literal">true</span></span><br><span class="line">oplogSize=2028</span><br><span class="line">rest=<span class="literal">true</span></span><br><span class="line">httpinterface=<span class="literal">true</span></span><br><span class="line">storageEngine=wiredTiger</span><br><span class="line"><span class="comment">#wiredTigerDirectoryForIndexes=true</span></span><br><span class="line">wiredTigerCacheSizeGB=30</span><br></pre></td></tr></table></figure>
+<p>第二台也同理，改一下<strong>端口</strong>，主要是调整分片的参数：</p>
+<p><code>shardsvr</code>：本机作为分片服务器</p>
+<p><code>replSet</code>：副本集的位置</p>
+<p>然后两台服务器配置启动：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./bin/mongod -f &lt;配置文件的地址&gt;</span><br></pre></td></tr></table></figure>
+<p>接下来是每个分片的副本集设置：（1的副本集部到2的里面，2的副本集部到1的里面）</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1号机</span></span><br><span class="line">./bin/mongo --port 27017</span><br><span class="line">&gt;use admin			//切到admin</span><br><span class="line">&gt;config = {_id:<span class="string">"sd2"</span>, members: [{_id: 0, host:<span class="string">"172.17.0.2:27017"</span>},{_id: 1, host:<span class="string">"172.17.0.3:27018"</span>},{_id: 2, host:<span class="string">"172.17.0.4:27019"</span>,<span class="string">"arbiterOnly"</span>:<span class="literal">true</span>}]};</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2号机</span></span><br><span class="line">./bin/mongo --port 27018</span><br><span class="line"><span class="comment"># 与上面同理的</span></span><br></pre></td></tr></table></figure>
+<h2 id="创建KeyFile"><a href="#创建KeyFile" class="headerlink" title="创建KeyFile"></a>创建KeyFile</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo <span class="built_in">mkdir</span> /app</span><br><span class="line">sudo <span class="built_in">chmod</span> 777 /app</span><br><span class="line">sudo openssl rand -<span class="built_in">base64</span> 128 &gt; /app/keyFile</span><br><span class="line">sudo <span class="built_in">chmod</span> 600 /app/keyFile</span><br></pre></td></tr></table></figure>
+<h2 id="2-2搭建Config-Sever"><a href="#2-2搭建Config-Sever" class="headerlink" title="2.2搭建Config Sever"></a>2.2搭建Config Sever</h2><p>创建两个配置文件夹<code>db</code> , <code>congfigdb</code>, </p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># /app/mongo6-config-0/configdb/mongod.conf</span></span><br><span class="line">net:</span><br><span class="line">  port: 21000</span><br><span class="line">  bindIpAll: <span class="literal">true</span></span><br><span class="line"> </span><br><span class="line">security:</span><br><span class="line">  keyFile: /data/configdb/keyFile</span><br><span class="line">  authorization: enabled</span><br><span class="line"> </span><br><span class="line">replication:</span><br><span class="line">   replSetName: rs-conf-0</span><br><span class="line"> </span><br><span class="line">sharding:</span><br><span class="line">   clusterRole: configsvr</span><br><span class="line"> </span><br><span class="line">storage:</span><br><span class="line">  wiredTiger:</span><br><span class="line">    engineConfig:</span><br><span class="line">      cacheSizeGB: 0.5</span><br></pre></td></tr></table></figure>
+<p>使用config文件启动mongo容器</p>
+<p>三台服务器的数据库的启动config都一样的：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">dbpath=/home/mongodb/data/config</span><br><span class="line">logpath=/home/mongodb/log/config.log</span><br><span class="line">port=27017</span><br><span class="line">logappend=<span class="literal">true</span></span><br><span class="line">fork=<span class="literal">true</span></span><br><span class="line">maxConns=5000</span><br><span class="line"><span class="comment">#复制集名称</span></span><br><span class="line">replSet=configs</span><br><span class="line"><span class="comment">#置参数为true</span></span><br><span class="line">configsvr=<span class="literal">true</span></span><br><span class="line"><span class="comment">#允许任意机器连接</span></span><br><span class="line">bind_ip=0.0.0.0</span><br></pre></td></tr></table></figure>
+<p>docker启动的时候做一个端口映射</p>
+<h1 id="new"><a href="#new" class="headerlink" title="new"></a>new</h1><p><img src="/2024/06/16/mongodb%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2/c65707738fb30fbe8edfa582d1c0a173.png" alt="image-20240502191601632"></p>
+<h2 id="从0开始"><a href="#从0开始" class="headerlink" title="从0开始"></a>从0开始</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建网络</span></span><br><span class="line">docker network create mongo-shard</span><br></pre></td></tr></table></figure>
+<p>先做好挂载的卷：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> -p mongodb/config-server/db</span><br><span class="line"><span class="built_in">mkdir</span> -p mongodb/config-server/log</span><br></pre></td></tr></table></figure>
+<p>运行容器（注意是当作<code>configsvr</code>):</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">docker run -d \</span><br><span class="line">--net mongo-shard \</span><br><span class="line">--name config-server \</span><br><span class="line">-p 27019:27019 \</span><br><span class="line">-v /mongodb/config-server/db:/data/db \</span><br><span class="line">-v /mongodb/config-server/log:/var/log/mongodb \</span><br><span class="line">-e mongo_initdb_root_username=root \</span><br><span class="line">-e mongo_initdb_root_password=root \</span><br><span class="line">mongo:4.4.10 \</span><br><span class="line">--configsvr \</span><br><span class="line">--replSet configrs</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>进入容器，初始化（<code>config sever</code>)</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rs.initiate({_id: <span class="string">"configrs"</span>, configsvr: <span class="literal">true</span>, members: [{_id: 0, host: <span class="string">"config-server:27019"</span>}]})</span><br></pre></td></tr></table></figure>
+<p><img src="/2024/06/16/mongodb%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2/image-20240620205516838.png" alt="image-20240620205516838"></p>
+<h2 id="启动三个shard"><a href="#启动三个shard" class="headerlink" title="启动三个shard"></a>启动三个shard</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># shard1</span></span><br><span class="line">docker run -d --net mongo-shard --name shard1 -p 27017:27018 -v /mongodb/shard1/db:/data/db -v /mongodb/shard1/log:/var/log/mongodb -e mongo_initdb_root_username=root -e mongo_initdb_root_password=root mongo:4.4.10 --shardsvr --replSet shard1rs</span><br><span class="line"></span><br><span class="line"><span class="comment"># shard2</span></span><br><span class="line">docker run -d --net mongo-shard --name shard2 -p 27018:27018 -v /mongodb/shard2/db:/data/db -v /mongodb/shard2/log:/var/log/mongodb -e mongo_initdb_root_username=root -e mongo_initdb_root_password=root mongo:4.4.10 --shardsvr --replSet shard1rs</span><br><span class="line"></span><br><span class="line"><span class="comment"># shard3</span></span><br><span class="line">docker run -d --net mongo-shard --name shard3 -p 27020:27018 -v /mongodb/shard3/db:/data/db -v /mongodb/shard3/log:/var/log/mongodb -e mongo_initdb_root_username=root -e mongo_initdb_root_password=root mongo:4.4.10 --shardsvr --replSet shard1rs</span><br></pre></td></tr></table></figure>
+<p>然后现在的容器应该有四个：</p>
+<p><img src="/2024/06/16/mongodb%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2/image-20240620210109857.png" alt="image-20240620210109857"></p>
+<p>首先进入shard1:</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 初始化集群</span></span><br><span class="line">rs.initiate({_id: <span class="string">"shard1rs"</span>, members: [{_id: 0, host: <span class="string">"shard1:27018"</span>},{_id: 1, host: <span class="string">"shard2:27018"</span>},{_id: 2, host: <span class="string">"shard3:27018"</span>}]})</span><br></pre></td></tr></table></figure>
+<h2 id="启动router"><a href="#启动router" class="headerlink" title="启动router"></a>启动router</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --net mongo-shard --name mongos -p 27021:27017 -v /mongodb/mongos/db:/data/db -v /mongodb/mongos/log:/var/log/mongodb -e mongo_initdb_root_username=root -e mongo_initdb_root_password=root mongo:4.4.10 mongos --configdb configrs/config-server:27019</span><br></pre></td></tr></table></figure>
+<p>然后配置router的配置信息</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sh.addShard(<span class="string">"shard1rs/shard1:27018"</span>)</span><br><span class="line">sh.addShard(<span class="string">"shard1rs/shard2:27018"</span>)</span><br><span class="line">sh.addShard(<span class="string">"shard1rs/shard3:27018"</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="/2024/06/16/mongodb%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2/image-20240620210559961.png" alt="image-20240620210559961"></p>
+<p>现在集群搭建完毕，可以试一试效果</p>
+<p><img src="/2024/06/16/mongodb%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2/image-20240620212356697.png" alt="image-20240620212356697"></p>
+<p>启动分片</p>
+<p><img src="/2024/06/16/mongodb%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2/image-20240621095700053.png" alt="image-20240621095700053"></p>
+<p>加入分片</p>
+<p><img src="/2024/06/16/mongodb%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2/image-20240621095734547.png" alt="image-20240621095734547"></p>
+<h1 id="使用yaml-shell部署"><a href="#使用yaml-shell部署" class="headerlink" title="使用yaml + shell部署"></a>使用yaml + shell部署</h1>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Docker/" rel="tag"># Docker</a>
+              <a href="/tags/MongoDB/" rel="tag"># MongoDB</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/06/14/docker%E4%BD%BF%E7%94%A8/" rel="prev" title="docker使用实战">
+      <i class="fa fa-chevron-left"></i> docker使用实战
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/06/16/go%E4%BD%BF%E7%94%A8mongoDB/" rel="next" title="go使用mongoDB">
+      go使用mongoDB <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E5%8D%95%E5%8F%B0%E5%AE%B9%E5%99%A8%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">1.</span> <span class="nav-text">1.单台容器的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1%E5%87%86%E5%A4%87"><span class="nav-number">1.1.</span> <span class="nav-text">1.1准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2%E7%99%BB%E9%99%86"><span class="nav-number">1.2.</span> <span class="nav-text">1.2登陆</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3%E9%93%BE%E6%8E%A5"><span class="nav-number">1.3.</span> <span class="nav-text">1.3链接</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E9%83%A8%E7%BD%B2%E5%88%86%E7%89%87%E9%9B%86%E7%BE%A4"><span class="nav-number">2.</span> <span class="nav-text">2.部署分片集群</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1%E9%83%A8%E7%BD%B2%E4%B8%A4%E5%8F%B0%E5%88%86%E7%89%87%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-number">2.1.</span> <span class="nav-text">2.1部署两台分片服务器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BAKeyFile"><span class="nav-number">2.2.</span> <span class="nav-text">创建KeyFile</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2%E6%90%AD%E5%BB%BAConfig-Sever"><span class="nav-number">2.3.</span> <span class="nav-text">2.2搭建Config Sever</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#new"><span class="nav-number">3.</span> <span class="nav-text">new</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8E0%E5%BC%80%E5%A7%8B"><span class="nav-number">3.1.</span> <span class="nav-text">从0开始</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8%E4%B8%89%E4%B8%AAshard"><span class="nav-number">3.2.</span> <span class="nav-text">启动三个shard</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8router"><span class="nav-number">3.3.</span> <span class="nav-text">启动router</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8yaml-shell%E9%83%A8%E7%BD%B2"><span class="nav-number">4.</span> <span class="nav-text">使用yaml + shell部署</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">llw</p>
+  <div class="site-description" itemprop="description">des</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">llw</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>

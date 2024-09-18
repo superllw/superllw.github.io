@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="记录一下腾讯云服务器的相关配置过程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="云服务器配置">
+<meta property="og:url" content="http://example.com/2024/06/10/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8/index.html">
+<meta property="og:site_name" content="llw&#39;s blog">
+<meta property="og:description" content="记录一下腾讯云服务器的相关配置过程">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2024/06/10/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8/image-20240610135919232.png">
+<meta property="og:image" content="http://example.com/2024/06/10/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8/image-20240610140004490.png">
+<meta property="og:image" content="http://example.com/2024/06/10/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8/image-20240610141626623.png">
+<meta property="og:image" content="http://example.com/2024/06/10/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8/image-20240610141750384.png">
+<meta property="og:image" content="http://example.com/2024/06/10/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8/image-20240610141527297.png">
+<meta property="og:image" content="http://example.com/2024/06/10/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8/image-20240610142358828.png">
+<meta property="og:image" content="http://example.com/2024/06/10/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8/image-20240610142433275.png">
+<meta property="og:image" content="http://example.com/2024/06/10/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8/image-20240610192349810.png">
+<meta property="og:image" content="http://example.com/2024/06/10/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8/image-20240611144450247.png">
+<meta property="og:image" content="http://example.com/2024/06/10/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8/image-20240611144736310.png">
+<meta property="article:published_time" content="2024-06-10T05:40:01.940Z">
+<meta property="article:modified_time" content="2024-06-11T13:24:35.034Z">
+<meta property="article:author" content="llw">
+<meta property="article:tag" content="云服务器">
+<meta property="article:tag" content="linux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2024/06/10/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8/image-20240610135919232.png">
+
+<link rel="canonical" href="http://example.com/2024/06/10/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>云服务器配置 | llw's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">llw's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">心之所向 素履以往</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">24</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">12</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">29</span></a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/06/10/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="llw">
+      <meta itemprop="description" content="des">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="llw's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          云服务器配置
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-06-10 13:40:01" itemprop="dateCreated datePublished" datetime="2024-06-10T13:40:01+08:00">2024-06-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-06-11 21:24:35" itemprop="dateModified" datetime="2024-06-11T21:24:35+08:00">2024-06-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/" itemprop="url" rel="index"><span itemprop="name">工具使用</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>记录一下腾讯云服务器的相关配置过程</p>
+<span id="more"></span>
+<h2 id="登陆"><a href="#登陆" class="headerlink" title="登陆"></a>登陆</h2><h3 id="标准方式登陆"><a href="#标准方式登陆" class="headerlink" title="标准方式登陆"></a>标准方式登陆</h3><p><img src="/2024/06/10/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8/image-20240610135919232.png" alt="image-20240610135919232"></p>
+<p>之后就可以进入到腾讯云网页版的界面中</p>
+<p>（这里省略了输入账号跟密码的过程，如果是初始的，就可以直接点击登陆，如果更改了密码，需要重新输入一下密码）</p>
+<p><img src="/2024/06/10/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8/image-20240610140004490.png" alt="image-20240610140004490"></p>
+<h3 id="ssh连接"><a href="#ssh连接" class="headerlink" title="ssh连接"></a>ssh连接</h3><p>使用的是macos，可以在终端中直接ssh连接：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh &lt;username&gt;@&lt;IP address or domain name&gt;</span><br></pre></td></tr></table></figure>
+<p><code>username</code> 是获取的用户名，一般为<code>root</code>或者<code>ubuntu</code></p>
+<p><code>IP address or domain name</code> 公网ip或者自定义域名，我使用的是公网ip（这个可以直接在控制台中点击详细信息查看）</p>
+<blockquote>
+<p>⚠️注意：由于公网ip通过NAT映射到内网ip地址，所以在实例内部无法查看到网络接口的属性：</p>
+<p>例如使用 <code>ifconfig(Linux)</code> 或者 <code>ipconfig(windows)</code></p>
+</blockquote>
+<p>如果正确，会显示让你输入密码：</p>
+<p><img src="/2024/06/10/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8/image-20240610141626623.png" alt="image-20240610141626623"></p>
+<p>正确在前面就会显示你的服务器的用户名以及信息，就表示成功登陆了：</p>
+<p><img src="/2024/06/10/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8/image-20240610141750384.png" alt="image-20240610141750384"></p>
+<p>(如果是第一次连接，会问你是否需要连接，输入<code>yes</code>就行)：</p>
+<p><img src="/2024/06/10/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8/image-20240610141527297.png" alt="image-20240610141527297"></p>
+<h3 id="使用远程软件登陆"><a href="#使用远程软件登陆" class="headerlink" title="使用远程软件登陆"></a>使用远程软件登陆</h3><p>使用的是termius，别的也是同理，一般会遇到以下的参数：</p>
+<p><code>Host name or Ip address</code>:  公网ip</p>
+<p><code>Port</code>: 服务器的端口，必须设置为22</p>
+<p><code>Connect Type</code>: 连接的方式，这里我选择的是SSH</p>
+<p><img src="/2024/06/10/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8/image-20240610142358828.png" alt="image-20240610142358828" style="zoom:50%;"></p>
+<p><img src="/2024/06/10/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8/image-20240610142433275.png" alt="image-20240610142433275"></p>
+<h3 id="使用私钥连接"><a href="#使用私钥连接" class="headerlink" title="使用私钥连接"></a>使用私钥连接</h3><p>这种比较方便</p>
+<p>首先在自己的计算机生成ssh公钥与私钥：（有可能你想生成不同的公钥私钥对应不同的服务器，可以使用<code>-f 名称</code>，这样也便于你进行管理）</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">ssh-keygen -t rsa -C “your email” -f id_rsa_xx</span></span><br></pre></td></tr></table></figure>
+<p>然后需要把<strong>公钥</strong>添加到服务器中去：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh-copy-id -i .ssh/id_rsa.pub 用户名@ip</span><br></pre></td></tr></table></figure>
+<p>如果成功添加在服务器中的<code>.ssh/authorized_keys</code>中会存放你的公钥</p>
+<p>现在其实就可以无需密码就可以连接了，可以使用：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh &lt;私钥路径&gt; &lt;user&gt;@&lt;ip&gt;</span><br></pre></td></tr></table></figure>
+<p>为了简化这个工程，可以在<code>config</code>文件中先填写相关的配置：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Host &lt;名字，随便你取&gt;</span><br><span class="line">	HostName &lt;ip&gt;</span><br><span class="line">	User &lt;登陆的名字&gt;</span><br><span class="line">	Port &lt;登陆使用的端口&gt;</span><br></pre></td></tr></table></figure>
+<p>然后可以使用设置好的名字进行连接：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh &lt;Host后面的那个名字&gt;</span><br></pre></td></tr></table></figure>
+<p>但是有可能会遇到的问题：</p>
+<h4 id="远程主机的ssh配置"><a href="#远程主机的ssh配置" class="headerlink" title="远程主机的ssh配置"></a>远程主机的ssh配置</h4><p><code>/etc/ssh/sshd_config</code>文件中：</p>
+<p><code>PubkeyAuthentication yes</code> #启用公钥认证</p>
+<p><code>AuthorizedKeysFile .ssh/authorized_keys</code> #公钥认证文件</p>
+<h4 id="客户端生成公钥私钥"><a href="#客户端生成公钥私钥" class="headerlink" title="客户端生成公钥私钥"></a>客户端生成公钥私钥</h4><p>这一步按照上面的就可以生成了，如果有问题确认一下就行</p>
+<h4 id="远程主机权限问题-大概率是这的问题"><a href="#远程主机权限问题-大概率是这的问题" class="headerlink" title="远程主机权限问题(大概率是这的问题)"></a>远程主机权限问题(大概率是这的问题)</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ls</span> -l</span><br></pre></td></tr></table></figure>
+<p>查看各个文件的权限，然后我这里的权限如下所示：</p>
+<p><img src="/2024/06/10/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8/image-20240610192349810.png" alt="image-20240610192349810"></p>
+<p>关于Linux的权限问题会在Linux相关内容里面进行介绍，这里只有所有者可以rwx，用户组和其他人没有权限，用户组不能有w权</p>
+<p><code>.ssh</code>目录的权限必须是700</p>
+<p><code>.ssh/authorized_keys</code>的权限必须是600</p>
+<h2 id="2-一些初始化"><a href="#2-一些初始化" class="headerlink" title="2.一些初始化"></a>2.一些初始化</h2><p>然后这些是我的选择了，我创建了几个文件夹：</p>
+<p><code>app</code>放程序用</p>
+<p><code>backup</code> 备份文件</p>
+<p><code>download</code> 下载</p>
+<p><code>logs</code> 日志</p>
+<p><code>work</code> 工作的文档</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">mkdir</span> &lt;文件名&gt;</span><br></pre></td></tr></table></figure>
+<p>关闭密码登陆，在<code>etc/ssh/sshd_config</code>:</p>
+<p><img src="/2024/06/10/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8/image-20240611144450247.png" alt="image-20240611144450247"></p>
+<p>这样在外面就不能通过ip+密码连接了</p>
+<p><img src="/2024/06/10/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8/image-20240611144736310.png" alt="image-20240611144736310"></p>
+<hr>
+<p>后面还有防火钱的设置跟别的服务器防护的设置，可能另外的专题写</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8/" rel="tag"># 云服务器</a>
+              <a href="/tags/linux/" rel="tag"># linux</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/06/03/git%E6%93%8D%E4%BD%9C/" rel="prev" title="Git操作">
+      <i class="fa fa-chevron-left"></i> Git操作
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/06/10/%E5%AE%89%E8%A3%85Nginx/" rel="next" title="安装Nginx">
+      安装Nginx <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%99%BB%E9%99%86"><span class="nav-number">1.</span> <span class="nav-text">登陆</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%87%E5%87%86%E6%96%B9%E5%BC%8F%E7%99%BB%E9%99%86"><span class="nav-number">1.1.</span> <span class="nav-text">标准方式登陆</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ssh%E8%BF%9E%E6%8E%A5"><span class="nav-number">1.2.</span> <span class="nav-text">ssh连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E8%BF%9C%E7%A8%8B%E8%BD%AF%E4%BB%B6%E7%99%BB%E9%99%86"><span class="nav-number">1.3.</span> <span class="nav-text">使用远程软件登陆</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E7%A7%81%E9%92%A5%E8%BF%9E%E6%8E%A5"><span class="nav-number">1.4.</span> <span class="nav-text">使用私钥连接</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%9C%E7%A8%8B%E4%B8%BB%E6%9C%BA%E7%9A%84ssh%E9%85%8D%E7%BD%AE"><span class="nav-number">1.4.1.</span> <span class="nav-text">远程主机的ssh配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%94%9F%E6%88%90%E5%85%AC%E9%92%A5%E7%A7%81%E9%92%A5"><span class="nav-number">1.4.2.</span> <span class="nav-text">客户端生成公钥私钥</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%9C%E7%A8%8B%E4%B8%BB%E6%9C%BA%E6%9D%83%E9%99%90%E9%97%AE%E9%A2%98-%E5%A4%A7%E6%A6%82%E7%8E%87%E6%98%AF%E8%BF%99%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">1.4.3.</span> <span class="nav-text">远程主机权限问题(大概率是这的问题)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E4%B8%80%E4%BA%9B%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">2.</span> <span class="nav-text">2.一些初始化</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">llw</p>
+  <div class="site-description" itemprop="description">des</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">llw</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>
