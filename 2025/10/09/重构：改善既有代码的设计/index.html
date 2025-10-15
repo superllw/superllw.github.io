@@ -20,20 +20,20 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="有点脑筋急转弯，挺好玩的">
+  <meta name="description" content="链接：https:&#x2F;&#x2F;book-refactoring2.ifmicro.com&#x2F;">
 <meta property="og:type" content="article">
-<meta property="og:title" content="贪心">
-<meta property="og:url" content="http://example.com/2024/11/06/%E8%B4%AA%E5%BF%83/index.html">
+<meta property="og:title" content="重构：改善既有代码的设计">
+<meta property="og:url" content="http://example.com/2025/10/09/%E9%87%8D%E6%9E%84%EF%BC%9A%E6%94%B9%E5%96%84%E6%97%A2%E6%9C%89%E4%BB%A3%E7%A0%81%E7%9A%84%E8%AE%BE%E8%AE%A1/index.html">
 <meta property="og:site_name" content="llw&#39;s blog">
-<meta property="og:description" content="有点脑筋急转弯，挺好玩的">
+<meta property="og:description" content="链接：https:&#x2F;&#x2F;book-refactoring2.ifmicro.com&#x2F;">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-11-06T01:00:49.605Z">
-<meta property="article:modified_time" content="2025-02-22T04:31:25.454Z">
+<meta property="article:published_time" content="2025-10-09T13:16:22.000Z">
+<meta property="article:modified_time" content="2025-10-09T14:17:21.889Z">
 <meta property="article:author" content="llw">
-<meta property="article:tag" content="leetcode">
+<meta property="article:tag" content="书籍">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/2024/11/06/%E8%B4%AA%E5%BF%83/">
+<link rel="canonical" href="http://example.com/2025/10/09/%E9%87%8D%E6%9E%84%EF%BC%9A%E6%94%B9%E5%96%84%E6%97%A2%E6%9C%89%E4%BB%A3%E7%A0%81%E7%9A%84%E8%AE%BE%E8%AE%A1/">
 
 
 <script id="page-configurations">
@@ -46,7 +46,7 @@
   };
 </script>
 
-  <title>贪心 | llw's blog</title>
+  <title>重构：改善既有代码的设计 | llw's blog</title>
   
 
 
@@ -77,119 +77,7 @@
   </style>
 </noscript>
 
-<style>mjx-container[jax="SVG"] {
-  direction: ltr;
-}
-
-mjx-container[jax="SVG"] > svg {
-  overflow: visible;
-}
-
-mjx-container[jax="SVG"][display="true"] {
-  display: block;
-  text-align: center;
-  margin: 1em 0;
-}
-
-mjx-container[jax="SVG"][justify="left"] {
-  text-align: left;
-}
-
-mjx-container[jax="SVG"][justify="right"] {
-  text-align: right;
-}
-
-g[data-mml-node="merror"] > g {
-  fill: red;
-  stroke: red;
-}
-
-g[data-mml-node="merror"] > rect[data-background] {
-  fill: yellow;
-  stroke: none;
-}
-
-g[data-mml-node="mtable"] > line[data-line] {
-  stroke-width: 70px;
-  fill: none;
-}
-
-g[data-mml-node="mtable"] > rect[data-frame] {
-  stroke-width: 70px;
-  fill: none;
-}
-
-g[data-mml-node="mtable"] > .mjx-dashed {
-  stroke-dasharray: 140;
-}
-
-g[data-mml-node="mtable"] > .mjx-dotted {
-  stroke-linecap: round;
-  stroke-dasharray: 0,140;
-}
-
-g[data-mml-node="mtable"] > svg {
-  overflow: visible;
-}
-
-[jax="SVG"] mjx-tool {
-  display: inline-block;
-  position: relative;
-  width: 0;
-  height: 0;
-}
-
-[jax="SVG"] mjx-tool > mjx-tip {
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
-mjx-tool > mjx-tip {
-  display: inline-block;
-  padding: .2em;
-  border: 1px solid #888;
-  font-size: 70%;
-  background-color: #F8F8F8;
-  color: black;
-  box-shadow: 2px 2px 5px #AAAAAA;
-}
-
-g[data-mml-node="maction"][data-toggle] {
-  cursor: pointer;
-}
-
-mjx-status {
-  display: block;
-  position: fixed;
-  left: 1em;
-  bottom: 1em;
-  min-width: 25%;
-  padding: .2em .4em;
-  border: 1px solid #888;
-  font-size: 90%;
-  background-color: #F8F8F8;
-  color: black;
-}
-
-foreignObject[data-mjx-xml] {
-  font-family: initial;
-  line-height: normal;
-  overflow: visible;
-}
-
-.MathJax path {
-  stroke-width: 3;
-}
-
-mjx-container[display="true"] {
-  overflow: auto hidden;
-}
-
-mjx-container[display="true"] + br {
-  display: none;
-}
-</style></head>
+</head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
   <div class="container use-motion">
@@ -238,7 +126,7 @@ mjx-container[display="true"] + br {
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">31</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">37</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -248,7 +136,7 @@ mjx-container[display="true"] + br {
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">46</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">53</span></a>
 
   </li>
   </ul>
@@ -275,7 +163,7 @@ mjx-container[display="true"] + br {
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/06/%E8%B4%AA%E5%BF%83/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/10/09/%E9%87%8D%E6%9E%84%EF%BC%9A%E6%94%B9%E5%96%84%E6%97%A2%E6%9C%89%E4%BB%A3%E7%A0%81%E7%9A%84%E8%AE%BE%E8%AE%A1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -288,7 +176,7 @@ mjx-container[display="true"] + br {
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          贪心
+          重构：改善既有代码的设计
         </h1>
 
         <div class="post-meta">
@@ -297,24 +185,9 @@ mjx-container[display="true"] + br {
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2024-11-06 09:00:49" itemprop="dateCreated datePublished" datetime="2024-11-06T09:00:49+08:00">2024-11-06</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2025-02-22 12:31:25" itemprop="dateModified" datetime="2025-02-22T12:31:25+08:00">2025-02-22</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
-                </span>
+              <time title="创建时间：2025-10-09 21:16:22 / 修改时间：22:17:21" itemprop="dateCreated datePublished" datetime="2025-10-09T21:16:22+08:00">2025-10-09</time>
             </span>
 
           
@@ -328,21 +201,74 @@ mjx-container[display="true"] + br {
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>有点脑筋急转弯，挺好玩的</p>
+        <p>链接：<a target="_blank" rel="noopener" href="https://book-refactoring2.ifmicro.com/">https://book-refactoring2.ifmicro.com/</a></p>
 <span id="more"></span>
-<h1 id="1-贪心策略"><a href="#1-贪心策略" class="headerlink" title="1.贪心策略"></a>1.贪心策略</h1><ul>
-<li>从最大/最小开始贪 —-&gt; 反悔贪心</li>
-<li>从最左/最右开始贪：把n个数的问题转换为n-1的子问题</li>
-</ul>
-<h2 id="从最小-最大开始贪心"><a href="#从最小-最大开始贪心" class="headerlink" title="从最小/最大开始贪心"></a>从最小/最大开始贪心</h2><p>需要注意答案是否跟顺序有关，无关的基本上都需要排序</p>
-<h1 id="2-区间贪心"><a href="#2-区间贪心" class="headerlink" title="2.区间贪心"></a>2.区间贪心</h1><p>区间贪心有如下经典问题：</p>
+<h1 id="第一章-重构，第一个示例"><a href="#第一章-重构，第一个示例" class="headerlink" title="第一章 重构，第一个示例"></a>第一章 重构，第一个示例</h1><blockquote>
+<p>需求通常不来则已，一来便会接踵而至<br>是需求的变化导致重构变的有必要</p>
+</blockquote>
+<p>第一步永远是确保即将修改的代码拥有一组可靠的测试。</p>
+<p>小步修改，每次修改之后就运行测试。把代码更改控制在一个很小的范围之内。小步的修改带来频繁的反馈，从而防止混乱。</p>
+<p>每次成功重构之后会提交一下代码（git commit），如果下一个出问题了可以回滚（git reset），</p>
+<h1 id="第二章-重构的原则"><a href="#第二章-重构的原则" class="headerlink" title="第二章 重构的原则"></a>第二章 重构的原则</h1><h3 id="什么是重构？"><a href="#什么是重构？" class="headerlink" title="什么是重构？"></a>什么是重构？</h3><p>重构（名词）：对软件内部结构的一种调整，目的是在不改变软件可观察行为的前提下，提高其可理解性，降低其修改成本。</p>
+<p>重构（动词）：使用一系列重构手法，在不改变软件可观察行为的前提下，调整其结构。</p>
+<p>重构是为了让代码“更容易理解，更容易修改”，可能会更快，也可能会更慢</p>
+<p>开发时候时间分配给两种行为：添加新功能和重构。</p>
+<h3 id="为什么要重构？"><a href="#为什么要重构？" class="headerlink" title="为什么要重构？"></a>为什么要重构？</h3><blockquote>
+<p>如果没有重构，程序的内部设计（或者叫架构）会逐渐腐败变质</p>
+</blockquote>
+<p>如果为了短期目的修改代码 -&gt; 没有完全理解架构的整体设计 -&gt; 代码失去结构</p>
 <ul>
-<li>不相交区间（单机器调度/活动安排）：给定一些区间，从中选出尽量多的两两互不相交的区间。</li>
-<li>区间分组（任务调度/会议室）：给定一些区间，把这些区间分成最少的组，使得每组内的区间互不相交。</li>
-<li>区间选点（射气球，Interval Stabbing）：给定一些区间，在数轴上放置最少的点，使得每个区间都包含至少一个点。最少要放置多少个点？</li>
-<li>区间覆盖（灌溉花园）：给定一些区间，从中选出尽量少的区间，覆盖一条指定线段 <mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.566ex;" xmlns="http://www.w3.org/2000/svg" width="4.142ex" height="2.262ex" role="img" focusable="false" viewbox="0 -750 1830.7 1000"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="5B" d="M118 -250V750H255V710H158V-210H255V-250H118Z"/></g><g data-mml-node="mi" transform="translate(278,0)"><path data-c="1D460" d="M131 289Q131 321 147 354T203 415T300 442Q362 442 390 415T419 355Q419 323 402 308T364 292Q351 292 340 300T328 326Q328 342 337 354T354 372T367 378Q368 378 368 379Q368 382 361 388T336 399T297 405Q249 405 227 379T204 326Q204 301 223 291T278 274T330 259Q396 230 396 163Q396 135 385 107T352 51T289 7T195 -10Q118 -10 86 19T53 87Q53 126 74 143T118 160Q133 160 146 151T160 120Q160 94 142 76T111 58Q109 57 108 57T107 55Q108 52 115 47T146 34T201 27Q237 27 263 38T301 66T318 97T323 122Q323 150 302 164T254 181T195 196T148 231Q131 256 131 289Z"/></g><g data-mml-node="mo" transform="translate(747,0)"><path data-c="2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"/></g><g data-mml-node="mi" transform="translate(1191.7,0)"><path data-c="1D461" d="M26 385Q19 392 19 395Q19 399 22 411T27 425Q29 430 36 430T87 431H140L159 511Q162 522 166 540T173 566T179 586T187 603T197 615T211 624T229 626Q247 625 254 615T261 596Q261 589 252 549T232 470L222 433Q222 431 272 431H323Q330 424 330 420Q330 398 317 385H210L174 240Q135 80 135 68Q135 26 162 26Q197 26 230 60T283 144Q285 150 288 151T303 153H307Q322 153 322 145Q322 142 319 133Q314 117 301 95T267 48T216 6T155 -11Q125 -11 98 4T59 56Q57 64 57 83V101L92 241Q127 382 128 383Q128 385 77 385H26Z"/></g><g data-mml-node="mo" transform="translate(1552.7,0)"><path data-c="5D" d="M22 710V750H159V-250H22V-210H119V710H22Z"/></g></g></g></svg></mjx-container></li>
+<li>为了让代码更容易被阅读，让代码更好的表达自己的意图，清晰的说出想要做的事情</li>
+<li>为了更好的找到bug，在出问题之前提前发现</li>
+<li>为了提高编程的速度，差的设计需要花大量的时间去阅读之前的代码，不断的bug找起来也很费力，但是一个好的设计，可以利用已有的功能，添加新功能的速度会越来越快</li>
 </ul>
-<h2 id="2-1不相交区间"><a href="#2-1不相交区间" class="headerlink" title="2.1不相交区间"></a>2.1不相交区间</h2>
+<h3 id="什么时候重构？"><a href="#什么时候重构？" class="headerlink" title="什么时候重构？"></a>什么时候重构？</h3><blockquote>
+<p>第一次做某件事的时候，尽管去做</p>
+<p>第二次做类似的事的时候，会产生反感</p>
+<p>第三次做类似的事的时候，就应该重构</p>
+</blockquote>
+<p>最佳时机是在添加新功能之前重构，修复bug时也是，可以使用重构来减少bug在同样场合出现的概率</p>
+<p>一旦需要思考“这段代码在干啥”的时候，就可以问一下自己：能不能重构这段代码，令其一目了然</p>
+<p>可以不专门安排时间来做，而是在添加功能或修复bug的同时顺便重构，不需要专门给重构留时间，而是在做其它事的时候自然就去重构了</p>
+<p><strong>如果重写比重构容易，就别重构了</strong></p>
+<h1 id="第三章-代码的坏味道"><a href="#第三章-代码的坏味道" class="headerlink" title="第三章 代码的坏味道"></a>第三章 代码的坏味道</h1><blockquote>
+<p>“坏味道”不是bug，不会导致程序出错，但是它是代码设计存在潜在问题的信号，意味着：<br>未来某天这里可能会出现问题、难以修饰或难以扩展</p>
+</blockquote>
+<ul>
+<li>神秘命名：阅读起来都不知道是啥意思<ul>
+<li>重构就是可以通过重命名（改变函数声明，变量改名，字段改名）</li>
+</ul>
+</li>
+<li>重复代码<ul>
+<li>使用提炼函数来提炼出重复的代码</li>
+<li>只是相似而不是相同，就可以移动重组之后再把相似的放在一起提炼</li>
+<li>如果在同一个超类的不同子类中，可以使用函数上移来避免互相调用</li>
+</ul>
+</li>
+<li>过长函数：函数越长，越难理解<ul>
+<li>积极分解函数（当感觉需要注释来说明点什么的死活，需要把说明的东西放到一个独立的函数里面去）</li>
+<li>找到函数中适合集中在一起的部分，提炼出来形成一个新函数</li>
+</ul>
+</li>
+<li>过长参数列表：<ul>
+<li>使用参数对象将其合并成一个对象</li>
+</ul>
+</li>
+<li>全局数据：代码中任何位置都有可能对其进行了修改<ul>
+<li>防御手段就是封装变量，把全局数据用函数包装起来，控制对其的访问</li>
+</ul>
+</li>
+<li>可变数据<ul>
+<li>我的理解并不是严格的禁止更改数据，而是需要<strong>受到控制</strong></li>
+<li>比如DDD中的值对象是不可变的，但是有使用聚合根、创建新的实例等方式来修改数据</li>
+</ul>
+</li>
+<li>发散式变化<ul>
+<li></li>
+</ul>
+</li>
+</ul>
+
     </div>
 
     
@@ -351,7 +277,7 @@ mjx-container[display="true"] + br {
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/leetcode/" rel="tag"># leetcode</a>
+              <a href="/tags/%E4%B9%A6%E7%B1%8D/" rel="tag"># 书籍</a>
           </div>
 
         
@@ -360,12 +286,12 @@ mjx-container[display="true"] + br {
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2024/10/27/cf%E6%9E%84%E9%80%A0%E9%A2%98/" rel="prev" title="cf构造题">
-      <i class="fa fa-chevron-left"></i> cf构造题
+    <a href="/2025/10/04/%E8%AE%BE%E8%AE%A1%E6%95%B0%E6%8D%AE%E5%AF%86%E9%9B%86%E5%9E%8B%E5%BA%94%E7%94%A8/" rel="prev" title="设计数据密集型应用">
+      <i class="fa fa-chevron-left"></i> 设计数据密集型应用
     </a></div>
       <div class="post-nav-item">
-    <a href="/2025/02/20/java%E5%AD%A6%E4%B9%A0/" rel="next" title="java学习">
-      java学习 <i class="fa fa-chevron-right"></i>
+    <a href="/2025/10/13/LSNet/" rel="next" title="LSNet">
+      LSNet <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -425,7 +351,7 @@ mjx-container[display="true"] + br {
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E8%B4%AA%E5%BF%83%E7%AD%96%E7%95%A5"><span class="nav-number">1.</span> <span class="nav-text">1.贪心策略</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8E%E6%9C%80%E5%B0%8F-%E6%9C%80%E5%A4%A7%E5%BC%80%E5%A7%8B%E8%B4%AA%E5%BF%83"><span class="nav-number">1.1.</span> <span class="nav-text">从最小&#x2F;最大开始贪心</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E5%8C%BA%E9%97%B4%E8%B4%AA%E5%BF%83"><span class="nav-number">2.</span> <span class="nav-text">2.区间贪心</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1%E4%B8%8D%E7%9B%B8%E4%BA%A4%E5%8C%BA%E9%97%B4"><span class="nav-number">2.1.</span> <span class="nav-text">2.1不相交区间</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E7%AB%A0-%E9%87%8D%E6%9E%84%EF%BC%8C%E7%AC%AC%E4%B8%80%E4%B8%AA%E7%A4%BA%E4%BE%8B"><span class="nav-number">1.</span> <span class="nav-text">第一章 重构，第一个示例</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E9%87%8D%E6%9E%84%E7%9A%84%E5%8E%9F%E5%88%99"><span class="nav-number">2.</span> <span class="nav-text">第二章 重构的原则</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E9%87%8D%E6%9E%84%EF%BC%9F"><span class="nav-number">2.0.1.</span> <span class="nav-text">什么是重构？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E9%87%8D%E6%9E%84%EF%BC%9F"><span class="nav-number">2.0.2.</span> <span class="nav-text">为什么要重构？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E9%87%8D%E6%9E%84%EF%BC%9F"><span class="nav-number">2.0.3.</span> <span class="nav-text">什么时候重构？</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E7%AB%A0-%E4%BB%A3%E7%A0%81%E7%9A%84%E5%9D%8F%E5%91%B3%E9%81%93"><span class="nav-number">3.</span> <span class="nav-text">第三章 代码的坏味道</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -439,7 +365,7 @@ mjx-container[display="true"] + br {
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-count">53</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -452,7 +378,7 @@ mjx-container[display="true"] + br {
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-count">37</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="LSNet：see large，focus small (cvpr2025)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LSNet">
+<meta property="og:url" content="http://example.com/2025/10/13/LSNet/index.html">
+<meta property="og:site_name" content="llw&#39;s blog">
+<meta property="og:description" content="LSNet：see large，focus small (cvpr2025)">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-10-13T07:15:17.000Z">
+<meta property="article:modified_time" content="2025-10-15T03:33:41.199Z">
+<meta property="article:author" content="llw">
+<meta property="article:tag" content="深度学习">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2025/10/13/LSNet/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>LSNet | llw's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">llw's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">心之所向 素履以往</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">37</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">12</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">53</span></a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/10/13/LSNet/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="llw">
+      <meta itemprop="description" content="des">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="llw's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          LSNet
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2025-10-13 15:15:17" itemprop="dateCreated datePublished" datetime="2025-10-13T15:15:17+08:00">2025-10-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-10-15 11:33:41" itemprop="dateModified" datetime="2025-10-15T11:33:41+08:00">2025-10-15</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>LSNet：see large，focus small (cvpr2025)</p>
+<span id="more"></span>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>在轻量级计算机视觉网络中都有一个问题：如何实现<strong>全局上下文感知</strong>与<strong>高效局部特征聚合</strong></p>
+<ul>
+<li>全局上下文感知: 比如在分类任务中，不能只盯着狗鼻子看，需要感知狗的整体体型、四肢等特征才能</li>
+<li>局部特征聚合：在小范围区域内，将分散的特征信息聚合起来。例如把狗的耳朵的毛发、轮廓、纹理等局部细节组合起来，形成耳朵这个局部特征。</li>
+</ul>
+<h2 id="相关工作"><a href="#相关工作" class="headerlink" title="相关工作"></a>相关工作</h2><h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><h3 id="令牌感知融合机制"><a href="#令牌感知融合机制" class="headerlink" title="令牌感知融合机制"></a>令牌感知融合机制</h3><p>不管是注意力还是卷积，都是一个统一的框架，用一个通用的公式：</p>
+<script type="math/tex; mode=display">
+y_i = A(P(x_i, N(x_i)), N(x_i))</script><p>两种不同的令牌混合机制，可以拆分为两步的通用流程，“P（感知） -&gt; A（聚合）”</p>
+<ul>
+<li>令牌：特征图上的基本处理单元，例如$X \in R^{H <em> W </em> C}$中的每个空间位置$x_i \in R^C$就是一个令牌，一个224 <em> 224 </em> 3的图像，卷积之后得到64 <em> 64 </em> 256的图像，其中就是4096个令牌，一个令牌是256维的向量</li>
+<li>令牌混合：结合周围信息的过程</li>
+<li>上下文区域N(x): 自注意力与卷积的核心差异之一，就是N的范围不一样，自注意力的N是全局所有令牌，卷积的N就是局部的K * K领域令牌</li>
+</ul>
+<p>公式1就是说：</p>
+<p>先感知$P(x_i, N(x_i))$，基于当前令牌$x_i$和其上下文区域$N(x_i)$，提取上下文信息捕捉令牌间的关系，最终输出一个<strong>关系权重</strong></p>
+<p>然后聚合$A(感知的结果，N(x_i))$，用感知得到的关系权重，对上下文区域中的令牌进行特征加权整合，最终输出目标令牌更新后的特征y</p>
+<h3 id="自注意力"><a href="#自注意力" class="headerlink" title="自注意力"></a>自注意力</h3><script type="math/tex; mode=display">
+y_i = A_{attn}(P_{attn}(x_i, X), X) = P_{attn}(x_i, X)(XW_v);\\
+P_{attn}(x_i, X) = softmax((x_iW_q)(XW_k)^T)</script><ul>
+<li>$x_i$:当前待更新的目标令牌</li>
+<li>$X$: 整个特征图</li>
+<li>$W_q, W_k,W_v$: 可学习的投影矩阵</li>
+</ul>
+<p>感知：将目标令牌$x<em>i$用$W_q$映射为查询向量，将整个特征图通过$W_k$映射为键矩阵，然后通过矩阵乘法计算$x_i$和$X$中每个令牌的原始相似度（内积越大说明二者特征越相似），然后进行softmax操作，得到注意力分数$P</em>{attn}(x_i, X)$,分数越高说明对应令牌跟$x_i$越相似</p>
+<p>聚合：将整个特征图X通过$W_v$映射为值矩阵，然后用得到的注意力分数与值矩阵相乘（就是按照关联强度加权求和），最后得到令牌特征</p>
+<p>问题：1. 大量背景是低信息密度区域，比如背景。2.尺度绑定：感知与聚合范围固定，P跟A共享完全相同的上下文尺度</p>
+<h3 id="卷积"><a href="#卷积" class="headerlink" title="卷积"></a>卷积</h3><script type="math/tex; mode=display">
+y_i = A_{conv}(P_{conv}(x_i, N_k(x_i)), N_k(x_i)) \\
+=P_{conv}(x_i, N_k(x_i)) \circledast N_k(x_i) \\
+P_{conv}(x_i, N_k(x_i)) =W_{conv}</script><p>$W_{conv}$是一个固定卷积核权重，是模型训练前随机初始化，训练中学习的固定数值集合，不随令牌位置变化或输入图像变化。</p>
+<p>感知：就是直接用卷积核权重$W_{conv}$作为聚合权重</p>
+<p>聚合：卷积操作，用得到的卷积核权重$W_{conv}$对局部上下文区域内的所有特征做加权求和，最终得到$x_i$更新之后的特征y</p>
+<h3 id="LS卷积"><a href="#LS卷积" class="headerlink" title="LS卷积"></a>LS卷积</h3><script type="math/tex; mode=display">
+y_i = A(P(x_i, N_P(x_i)), N_A(x_i))</script><p>受到人类视觉系统的动态异尺度能力的启发，查分感知和聚合的上下文区域</p>
+<p>大视野感知: 用远大于传统卷积的局部区域，模拟人类视觉看全局的能力，<strong>核心目标：用低计算成本（例如深度可分离卷积）捕捉令牌x与全局关键区域的关联</strong></p>
+<p>小视野聚合：模拟人类的中央视觉盯细节的能力</p>
+<p>三个优势：</p>
+<ul>
+<li>$N_P, N_A$两个不同的范围，利用异尺度信息，为了兼顾全局与细节</li>
+<li>大视野感知用低成本操作，使用大核深度可分离卷积，减少计算开销</li>
+<li>小范围使用自适应加权特征求和，会优先融合与目标令牌高度相关的局部特征，忽略无关特征</li>
+</ul>
+<h3 id="LKP"><a href="#LKP" class="headerlink" title="LKP"></a>LKP</h3><p>large kernel Perception</p>
+<script type="math/tex; mode=display">
+w_i = P_{ls}(x_i, N_{K_L}(x_i)) \\ 
+w_i=PW(DW_{K_L * K_L}(PW(N_{K_L}(x_i))))</script><ul>
+<li>PW: 逐点卷积，1*1卷积，进行降维，主要是为了控制成本，将领域$N_{K_L}(x_i)$点通道数从C降低到$\frac{C}{2}$，</li>
+<li>DW: 大核深度可分离卷积（默认7*7）</li>
+</ul>
+<p>流程：</p>
+<p>首先用逐点卷积进行降维，为了减少通道数量从而使计算的复杂度降低，</p>
+<p>然后使用深度可分离卷积，计算复杂度为普通大核卷积的$\frac{1}{K_L^{2}}$</p>
+<p>最后再用一次逐点卷积，将大核DW输出的特征映射为上下文自适应权重$w_i \in R^D$(D是模型权重维度，由模型设置)，对每个令牌的权重重构为权重图$W \in R^{H<em>W</em>D}$</p>
+<h3 id="SKA"><a href="#SKA" class="headerlink" title="SKA"></a>SKA</h3><p>Small kernel Aggregation</p>
+<script type="math/tex; mode=display">
+y_{ic} = A_{ls}(w_{ig}^*, N_{K_S}(x_{ic})) = w_{ig} \circledast N_{K_S}(x_{ic})</script><p>将输入的特征图X的C个通道分为G个组（文中是$G = \frac{C}{8}$, 就是一个组里面8个通道），然后同一个组的所有通道共享一套聚合权重</p>
+<p>将之前LKP得到的权重重塑为分组卷积核的形式$w<em>i \in R^D, w</em>{ig}^<em> \in R^{G</em>K<em>S*K_S}$，$w</em>{ig}$就是第g个通道的“自适应卷积核权重”。</p>
+<p>然后每个通道可以确定是哪个通道组的，然后拿到对应的通道卷积核，然后再提取通道在他小领域的局部特征，使用自适应卷积核进行卷积操作</p>
+<p>最后将所有通道拼接，得到对应目标令牌$x_i$的最终聚合特征$y_i$</p>
+<h3 id="复杂度分析"><a href="#复杂度分析" class="headerlink" title="复杂度分析"></a>复杂度分析</h3><h2 id="LSNet"><a href="#LSNet" class="headerlink" title="LSNet"></a>LSNet</h2><p>核心单元：LS Block的构建，四个关键的组件：</p>
+<p>LS卷积，大核感知+小核聚合</p>
+<p>额外的深度可分离卷积：3*3，进一步强化局部特征的提取能力（引入更多局部归纳偏执）</p>
+<p>SE层：（Squeeze-and-Excitation）通道注意力机制，通过全局平均池化 + 全连接层去学习通道权重，对高价值的特征通道赋予高权重，抑制冗余通道</p>
+<p>FFN前馈神经网络：做通道维度的混合，通过两次1*1卷积，先将通道升到4C，然后Gelu激活，然后再降回C</p>
+<p>Stem（输入层）：对原始的图像先进行初步的特征提取，为后续的提供低分辨率高通道的初始特征</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" rel="tag"># 深度学习</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/10/09/%E9%87%8D%E6%9E%84%EF%BC%9A%E6%94%B9%E5%96%84%E6%97%A2%E6%9C%89%E4%BB%A3%E7%A0%81%E7%9A%84%E8%AE%BE%E8%AE%A1/" rel="prev" title="重构：改善既有代码的设计">
+      <i class="fa fa-chevron-left"></i> 重构：改善既有代码的设计
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E5%B7%A5%E4%BD%9C"><span class="nav-number">2.</span> <span class="nav-text">相关工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A4%E7%89%8C%E6%84%9F%E7%9F%A5%E8%9E%8D%E5%90%88%E6%9C%BA%E5%88%B6"><span class="nav-number">3.1.</span> <span class="nav-text">令牌感知融合机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E6%B3%A8%E6%84%8F%E5%8A%9B"><span class="nav-number">3.2.</span> <span class="nav-text">自注意力</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%B7%E7%A7%AF"><span class="nav-number">3.3.</span> <span class="nav-text">卷积</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LS%E5%8D%B7%E7%A7%AF"><span class="nav-number">3.4.</span> <span class="nav-text">LS卷积</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LKP"><span class="nav-number">3.5.</span> <span class="nav-text">LKP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SKA"><span class="nav-number">3.6.</span> <span class="nav-text">SKA</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%88%86%E6%9E%90"><span class="nav-number">3.7.</span> <span class="nav-text">复杂度分析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LSNet"><span class="nav-number">4.</span> <span class="nav-text">LSNet</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">llw</p>
+  <div class="site-description" itemprop="description">des</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">53</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">37</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">llw</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>
